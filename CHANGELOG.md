@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.2...v0.1.3) (2020-11-08)
+
+
+### Features
+
+* 🎸 add favourite icon ([605178b](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/605178bdf391de4d3b049b8d74fe57b747808006))
+* 🎸 add favourites ([cafe3eb](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/cafe3ebfe018a9c3be00f2c4b36346a42a083da8))
+
 ### [0.1.2](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.1...v0.1.2) (2020-11-08)
 
 ### 0.1.1 (2020-11-08)
