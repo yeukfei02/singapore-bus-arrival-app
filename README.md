@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200px" src="https://github.com/yeukfei02/singapore-bus-arrival-app/blob/master/readme-icon.png"><br/>
+  <img width="200px" src="https://github.com/yeukfei02/singapore-bus-arrival-app/blob/main/readme-icon.png?raw=true"><br/>
   <h2 align="center">singapore-bus-arrival-app</h2>
 </p>
 
