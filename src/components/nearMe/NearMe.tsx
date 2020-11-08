@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, ScrollView, View, RefreshControl } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, RefreshControl, TouchableOpacity, Linking } from 'react-native';
 
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,6 +11,37 @@ const styles = StyleSheet.create({
   viewContainer: {
     marginVertical: 65,
     marginHorizontal: 30,
+  },
+  noDataContainer: {
+    backgroundColor: 'gainsboro',
+    padding: 20,
+    borderRadius: 5,
+  },
+  loadingContainer: {
+    backgroundColor: 'moccasin',
+    padding: 20,
+    borderRadius: 5,
+  },
+  errorContainer: {
+    backgroundColor: 'tomato',
+    padding: 20,
+    borderRadius: 5,
+  },
+  busStopByLatLongResultContainer: {
+    backgroundColor: 'gainsboro',
+    padding: 20,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  busStopByLatLongResultDescriptionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 5,
+  },
+  busStopByLatLongResultRoadNameText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginVertical: 5,
   },
 });
 
@@ -32,9 +63,9 @@ function NearMe(): JSX.Element {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  const { loading, error, data } = useQuery(GET_BUS_STOP_BY_LATLONG, {
-    variables: { latitude: latitude, longitude: longitude },
-  });
+  const [responseData, setResponseData] = useState<any>(null);
+
+  const [getBusStopByLatLong, { loading, error, data }] = useLazyQuery(GET_BUS_STOP_BY_LATLONG);
 
   console.log('loading = ', loading);
   console.log('error = ', error);
@@ -44,16 +75,19 @@ function NearMe(): JSX.Element {
     getUserCurrentLocation();
   }, []);
 
-  //   useEffect(() => {
-  //     if (latitude != 0 && longitude != 0) {
-  //       getBusStopByLatLong({
-  //         variables: {
-  //           latitude: latitude,
-  //           longitude: longitude,
-  //         },
-  //       });
-  //     }
-  //   }, [latitude, longitude]);
+  useEffect(() => {
+    if (latitude != 0 && longitude != 0) {
+      getBusStopByLatLong({
+        variables: { latitude: latitude, longitude: longitude },
+      });
+    }
+  }, [latitude, longitude]);
+
+  useEffect(() => {
+    if (data) {
+      setResponseData(data);
+    }
+  }, [data]);
 
   const getUserCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition((position: any) => {
@@ -72,33 +106,41 @@ function NearMe(): JSX.Element {
 
   const renderGetBusStopByLatLongResult = () => {
     let getBusStopByLatLongResultDiv = (
-      <View style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 5 }}>
+      <View style={styles.noDataContainer}>
         <Text>There is no data</Text>
       </View>
     );
 
     if (loading) {
       getBusStopByLatLongResultDiv = (
-        <View style={{ backgroundColor: 'gold', padding: 20, borderRadius: 5 }}>
+        <View style={styles.loadingContainer}>
           <Text>Loading...</Text>
         </View>
       );
     } else {
       if (error) {
         getBusStopByLatLongResultDiv = (
-          <View style={{ backgroundColor: 'tomato', padding: 20, borderRadius: 5 }}>
+          <View style={styles.errorContainer}>
             <Text>There is error</Text>
           </View>
         );
       } else {
-        if (data && data.busStopByLatLong) {
-          getBusStopByLatLongResultDiv = data.busStopByLatLong.map((item: any, i: number) => {
+        if (responseData && responseData.busStopByLatLong) {
+          const filteredBusStopByLatLongList = responseData.busStopByLatLong.filter((item: any, i: number) => {
+            return i <= 9;
+          });
+
+          getBusStopByLatLongResultDiv = filteredBusStopByLatLongList.map((item: any, i: number) => {
             return (
-              <View key={i} style={{ backgroundColor: 'lightgray', padding: 20, borderRadius: 5 }}>
-                <Text>{item.busStopCode}</Text>
-                <Text>{item.roadName}</Text>
-                <Text>{item.latitude}</Text>
-                <Text>{item.longitude}</Text>
+              <View key={i} style={styles.busStopByLatLongResultContainer}>
+                <Text style={styles.busStopByLatLongResultDescriptionText}>{item.description}</Text>
+                <Text style={styles.busStopByLatLongResultRoadNameText}>{item.roadName}</Text>
+                <Text style={{ marginVertical: 5 }}>Bus Stop Code: {item.busStopCode}</Text>
+                <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
+                  <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                    Open in google map
+                  </Text>
+                </TouchableOpacity>
               </View>
             );
           });
@@ -109,8 +151,15 @@ function NearMe(): JSX.Element {
     return getBusStopByLatLongResultDiv;
   };
 
+  const handleOpenInGoogleMap = (latitude: number, longitude: number) => {
+    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`);
+  };
+
   const onRefresh = () => {
     setRefreshing(true);
+    getBusStopByLatLong({
+      variables: { latitude: latitude, longitude: longitude },
+    });
 
     if (!loading) {
       setRefreshing(false);
