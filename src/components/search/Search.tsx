@@ -175,9 +175,9 @@ function Search(props: any): JSX.Element {
                   <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
                   <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                    <Text style={{ fontSize: 18 }}>Bus Stop Code: </Text>
+                    <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
                     <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
-                      <Text style={{ fontSize: 18, color: 'red', textDecorationLine: 'underline' }}>
+                      <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
                         {item.busStopCode}
                       </Text>
                     </TouchableOpacity>
@@ -219,9 +219,9 @@ function Search(props: any): JSX.Element {
                   <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
                   <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                    <Text style={{ fontSize: 18 }}>Bus Stop Code: </Text>
+                    <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
                     <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
-                      <Text style={{ fontSize: 18, color: 'red', textDecorationLine: 'underline' }}>
+                      <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
                         {item.busStopCode}
                       </Text>
                     </TouchableOpacity>
