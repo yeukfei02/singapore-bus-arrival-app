@@ -152,9 +152,11 @@ function NearMe(props: any): JSX.Element {
                 <Text style={styles.busStopByLatLongResultRoadNameText}>{item.roadName}</Text>
 
                 <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                  <Text>Bus Stop Code: </Text>
+                  <Text style={{ fontSize: 18 }}>Bus Stop Code: </Text>
                   <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
-                    <Text style={{ color: 'red', textDecorationLine: 'underline' }}>{item.busStopCode}</Text>
+                    <Text style={{ fontSize: 18, color: 'red', textDecorationLine: 'underline' }}>
+                      {item.busStopCode}
+                    </Text>
                   </TouchableOpacity>
                 </View>
 
@@ -205,7 +207,7 @@ function NearMe(props: any): JSX.Element {
       contentContainerStyle={{ flexGrow: 1 }}
     >
       <View style={styles.viewContainer}>
-        <Text style={{ fontSize: 20, color: theme === 'light' ? 'black' : 'white' }}>NearMe</Text>
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: theme === 'light' ? 'black' : 'white' }}>NearMe</Text>
 
         <View style={{ marginVertical: 10 }}></View>
 

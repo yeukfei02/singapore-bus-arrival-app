@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'react-native';
-import { Card } from 'react-native-paper';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Card, List } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
 
@@ -76,6 +76,9 @@ function BusArrivalDetails(props: any): JSX.Element {
 
   useEffect(() => {
     getThemeData();
+    props.navigation.addListener('focus', () => {
+      getThemeData();
+    });
   }, []);
 
   useEffect(() => {
@@ -143,15 +146,17 @@ function BusArrivalDetails(props: any): JSX.Element {
                     <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{timeDiff} minutes</Text>
                   </View>
 
-                  <Text style={{ marginVertical: 5 }}>{item.load}</Text>
-                  <Text style={{ marginVertical: 5 }}>{item.feature}</Text>
-                  <Text style={{ marginVertical: 5 }}>{item.type}</Text>
+                  <List.Accordion title="Show more">
+                    <Text style={{ marginVertical: 5 }}>{item.load}</Text>
+                    <Text style={{ marginVertical: 5 }}>{item.feature}</Text>
+                    <Text style={{ marginVertical: 5 }}>{item.type}</Text>
 
-                  <TouchableOpacity onPress={() => handleCheckBusInGoogleMap(item.latitude, item.longitude)}>
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                      Check bus in google map
-                    </Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleCheckBusInGoogleMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                        Check bus in google map
+                      </Text>
+                    </TouchableOpacity>
+                  </List.Accordion>
                 </Card>
               );
             });
@@ -161,26 +166,9 @@ function BusArrivalDetails(props: any): JSX.Element {
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.busNumber}</Text>
                 <Text style={{ marginVertical: 10 }}>{item.operator}</Text>
 
-                {/* <TouchableOpacity style={{ marginVertical: 10 }} onPress={() => handleShowDetailsClick()}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      backgroundColor: 'tomato',
-                      padding: 12,
-                      borderRadius: 5,
-                    }}
-                  >
-                    <View style={{ justifyContent: 'center' }}>
-                      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>Show details</Text>
-                    </View>
-                    <View style={{ justifyContent: 'center' }}>
-                      <Feather name="chevron-down" size={24} color="white" />
-                    </View>
-                  </View>
-                </TouchableOpacity> */}
-
-                <View>{nextBusListResultDiv}</View>
+                <List.Accordion title="Show details">
+                  <View>{nextBusListResultDiv}</View>
+                </List.Accordion>
               </View>
             );
           });
@@ -195,8 +183,6 @@ function BusArrivalDetails(props: any): JSX.Element {
     Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`);
   };
 
-  // const handleShowDetailsClick = () => {};
-
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
@@ -209,7 +195,9 @@ function BusArrivalDetails(props: any): JSX.Element {
 
         <View style={{ marginVertical: 15 }}></View>
 
-        <Text style={{ fontSize: 20, color: theme === 'light' ? 'black' : 'white' }}>Bus Arrival Details</Text>
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: theme === 'light' ? 'black' : 'white' }}>
+          Bus Arrival Details
+        </Text>
 
         <View style={{ marginVertical: 10 }}></View>
 

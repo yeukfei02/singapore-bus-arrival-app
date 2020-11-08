@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'react-native';
 import { Button, Paragraph, Dialog } from 'react-native-paper';
+import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 import { storeDataToAsyncStorage, getAsyncStorageData } from '../../common/common';
 
@@ -53,13 +54,21 @@ function Settings(props: any): JSX.Element {
     props.navigation.navigate('NearMe');
   };
 
+  const handleEmailIconClick = () => {
+    Linking.openURL(`mailto:yeukfei02@gmail.com`);
+  };
+
+  const handleGithubIconClick = () => {
+    Linking.openURL(`https://github.com/yeukfei02`);
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
       contentContainerStyle={{ flexGrow: 1 }}
     >
       <View style={styles.viewContainer}>
-        <Text style={{ fontSize: 20, color: theme === 'light' ? 'black' : 'white' }}>Settings</Text>
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: theme === 'light' ? 'black' : 'white' }}>Settings</Text>
 
         <View style={{ marginVertical: 20 }}></View>
 
@@ -73,6 +82,21 @@ function Settings(props: any): JSX.Element {
             <View style={{ backgroundColor: 'gray', padding: 15, borderRadius: 5 }}>
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>DARK THEME</Text>
             </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ marginVertical: 20 }}></View>
+
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: theme === 'light' ? 'black' : 'white' }}>
+          Report a bug
+        </Text>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20 }}>
+          <TouchableOpacity onPress={() => handleEmailIconClick()}>
+            <MaterialIcons name="email" size={50} color="indianred" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleGithubIconClick()}>
+            <AntDesign name="github" size={50} color="orchid" />
           </TouchableOpacity>
         </View>
       </View>
