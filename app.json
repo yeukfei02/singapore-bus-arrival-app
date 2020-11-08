@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "singapore-bus-arrival-app",
+    "slug": "singapore-bus-arrival-app",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/appstore-icon.png",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.donaldwu.singaporebusarrivalapp",
+      "buildNumber": "0.1.0",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
+        "NSLocationAlwaysUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
+        "NSLocationUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you"
+      }
+    },
+    "android": {
+      "package": "com.donaldwu.singaporebusarrivalapp",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "description": "Singpaore Bus Arrival App",
+    "privacy": "public",
+    "githubUrl": "https://github.com/yeukfei02/singapore-bus-arrival-app"
+  }
+}
