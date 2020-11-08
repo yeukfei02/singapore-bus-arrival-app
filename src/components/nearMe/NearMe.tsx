@@ -150,7 +150,14 @@ function NearMe(props: any): JSX.Element {
               <View key={i} style={styles.busStopByLatLongResultContainer}>
                 <Text style={styles.busStopByLatLongResultDescriptionText}>{item.description}</Text>
                 <Text style={styles.busStopByLatLongResultRoadNameText}>{item.roadName}</Text>
-                <Text style={{ marginVertical: 5 }}>Bus Stop Code: {item.busStopCode}</Text>
+
+                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+                  <Text>Bus Stop Code: </Text>
+                  <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                    <Text style={{ color: 'red', textDecorationLine: 'underline' }}>{item.busStopCode}</Text>
+                  </TouchableOpacity>
+                </View>
+
                 <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
                   <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
                     Open in google map
@@ -164,6 +171,12 @@ function NearMe(props: any): JSX.Element {
     }
 
     return getBusStopByLatLongResultDiv;
+  };
+
+  const handleBusStopCodeClick = (busStopCode: string) => {
+    props.navigation.navigate(`BusArrivalDetails`, {
+      busStopCode: busStopCode,
+    });
   };
 
   const handleOpenInGoogleMap = (latitude: number, longitude: number) => {

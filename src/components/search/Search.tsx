@@ -173,7 +173,14 @@ function Search(props: any): JSX.Element {
                 <View key={i} style={styles.busStopResultContainer}>
                   <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
                   <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
-                  <Text style={{ marginVertical: 5 }}>Bus Stop Code: {item.busStopCode}</Text>
+
+                  <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+                    <Text>Bus Stop Code: </Text>
+                    <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                      <Text style={{ color: 'red', textDecorationLine: 'underline' }}>{item.busStopCode}</Text>
+                    </TouchableOpacity>
+                  </View>
+
                   <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
                     <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
                       Open in google map
@@ -208,7 +215,14 @@ function Search(props: any): JSX.Element {
                 <View key={i} style={styles.busStopResultContainer}>
                   <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
                   <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
-                  <Text style={{ marginVertical: 5 }}>Bus Stop Code: {item.busStopCode}</Text>
+
+                  <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+                    <Text>Bus Stop Code: </Text>
+                    <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                      <Text style={{ color: 'red', textDecorationLine: 'underline' }}>{item.busStopCode}</Text>
+                    </TouchableOpacity>
+                  </View>
+
                   <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
                     <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
                       Open in google map
@@ -223,6 +237,12 @@ function Search(props: any): JSX.Element {
     }
 
     return busStopResultDiv;
+  };
+
+  const handleBusStopCodeClick = (busStopCode: string) => {
+    props.navigation.navigate(`BusArrivalDetails`, {
+      busStopCode: busStopCode,
+    });
   };
 
   const handleOpenInGoogleMap = (latitude: number, longitude: number) => {
