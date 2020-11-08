@@ -3,6 +3,8 @@ import { StyleSheet, Text, ScrollView, View, RefreshControl, TouchableOpacity, L
 
 import { gql, useLazyQuery } from '@apollo/client';
 
+import { getAsyncStorageData } from '../../common/common';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -57,11 +59,13 @@ const GET_BUS_STOP_BY_LATLONG = gql`
   }
 `;
 
-function NearMe(): JSX.Element {
+function NearMe(props: any): JSX.Element {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const [theme, setTheme] = useState('light');
 
   const [responseData, setResponseData] = useState<any>(null);
 
@@ -73,6 +77,10 @@ function NearMe(): JSX.Element {
 
   useEffect(() => {
     getUserCurrentLocation();
+    getThemeData();
+    props.navigation.addListener('focus', () => {
+      getThemeData();
+    });
   }, []);
 
   useEffect(() => {
@@ -90,18 +98,25 @@ function NearMe(): JSX.Element {
   }, [data]);
 
   const getUserCurrentLocation = async () => {
-    navigator.geolocation.getCurrentPosition((position: any) => {
-      if (position && position.coords) {
-        console.log('latitude = ', position.coords.latitude);
-        console.log('longitude = ', position.coords.longitude);
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-      }
-    });
+    // navigator.geolocation.getCurrentPosition((position: any) => {
+    //   if (position && position.coords) {
+    //     console.log('latitude = ', position.coords.latitude);
+    //     console.log('longitude = ', position.coords.longitude);
+    //     setLatitude(position.coords.latitude);
+    //     setLongitude(position.coords.longitude);
+    //   }
+    // });
 
     // sg location
-    // setLatitude(1.352083);
-    // setLongitude(103.819839);
+    setLatitude(1.352083);
+    setLongitude(103.819839);
+  };
+
+  const getThemeData = async () => {
+    const theme = await getAsyncStorageData('@theme');
+    if (theme) {
+      setTheme(theme);
+    }
   };
 
   const renderGetBusStopByLatLongResult = () => {
@@ -157,6 +172,8 @@ function NearMe(): JSX.Element {
 
   const onRefresh = () => {
     setRefreshing(true);
+
+    getThemeData();
     getBusStopByLatLong({
       variables: { latitude: latitude, longitude: longitude },
     });
@@ -168,11 +185,14 @@ function NearMe(): JSX.Element {
 
   return (
     <ScrollView
-      style={styles.container}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['tomato', 'tomato', 'black']} />
+      }
+      contentContainerStyle={{ flexGrow: 1 }}
     >
       <View style={styles.viewContainer}>
-        <Text style={{ fontSize: 20 }}>NearMe</Text>
+        <Text style={{ fontSize: 20, color: theme === 'light' ? 'black' : 'white' }}>NearMe</Text>
 
         <View style={{ marginVertical: 10 }}></View>
 

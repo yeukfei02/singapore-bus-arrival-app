@@ -3,6 +3,8 @@ import { StyleSheet, Text, TextInput, ScrollView, View, RefreshControl, Touchabl
 
 import { gql, useLazyQuery } from '@apollo/client';
 
+import { getAsyncStorageData } from '../../common/common';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -69,11 +71,13 @@ const GET_BUS_STOP_BY_DESCRIPTION = gql`
   }
 `;
 
-function Search(): JSX.Element {
+function Search(props: any): JSX.Element {
   const [roadName, setRoadName] = useState('');
   const [placeName, setPlaceName] = useState('');
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const [theme, setTheme] = useState('light');
 
   const [recordData, setRecordData] = useState<any>(null);
   const [record2Data, setRecord2Data] = useState<any>(null);
@@ -88,6 +92,13 @@ function Search(): JSX.Element {
   console.log('record2 loading = ', record2.loading);
   console.log('record2 error = ', record2.error);
   console.log('record2 data = ', record2.data);
+
+  useEffect(() => {
+    getThemeData();
+    props.navigation.addListener('focus', () => {
+      getThemeData();
+    });
+  }, []);
 
   useEffect(() => {
     if (roadName && roadName.length > 3) {
@@ -112,6 +123,13 @@ function Search(): JSX.Element {
       setRecord2Data(record2.data);
     }
   }, [record2.data]);
+
+  const getThemeData = async () => {
+    const theme = await getAsyncStorageData('@theme');
+    if (theme) {
+      setTheme(theme);
+    }
+  };
 
   const handleRoadNameChange = (text: string) => {
     setRecordData(null);
@@ -213,6 +231,8 @@ function Search(): JSX.Element {
 
   const onRefresh = () => {
     setRefreshing(true);
+
+    getThemeData();
     setRoadName('');
     setPlaceName('');
     setRecordData(null);
@@ -225,17 +245,20 @@ function Search(): JSX.Element {
 
   return (
     <ScrollView
-      style={styles.container}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['tomato', 'tomato', 'black']} />
+      }
+      contentContainerStyle={{ flexGrow: 1 }}
     >
       <View style={styles.viewContainer}>
-        <Text style={{ fontSize: 20 }}>Search</Text>
+        <Text style={{ fontSize: 20, color: theme === 'light' ? 'black' : 'white' }}>Search</Text>
 
         <View style={{ marginVertical: 10 }}></View>
 
         <TextInput
           style={{
-            height: 50,
+            height: 60,
             padding: 10,
             backgroundColor: 'gainsboro',
             borderColor: 'black',
@@ -253,7 +276,7 @@ function Search(): JSX.Element {
 
         <TextInput
           style={{
-            height: 50,
+            height: 60,
             padding: 10,
             backgroundColor: 'gainsboro',
             borderColor: 'black',
