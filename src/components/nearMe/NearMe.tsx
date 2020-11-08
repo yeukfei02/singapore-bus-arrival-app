@@ -3,7 +3,7 @@ import { StyleSheet, Text, ScrollView, View, RefreshControl, TouchableOpacity, L
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 import { getAsyncStorageData } from '../../common/common';
 
@@ -61,6 +61,14 @@ const GET_BUS_STOP_BY_LATLONG = gql`
   }
 `;
 
+const ADD_FAVOURITES = gql`
+  mutation addFavourites($data: AddFavourites!) {
+    addFavourites(data: $data) {
+      status
+    }
+  }
+`;
+
 function NearMe(props: any): JSX.Element {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -73,9 +81,13 @@ function NearMe(props: any): JSX.Element {
 
   const [getBusStopByLatLong, record] = useLazyQuery(GET_BUS_STOP_BY_LATLONG);
 
+  const [addFavourites, addFavouritesResult] = useMutation(ADD_FAVOURITES);
+
   console.log('loading = ', record.loading);
   console.log('error = ', record.error);
   console.log('data = ', record.data);
+
+  console.log('addFavouritesResult.data = ', addFavouritesResult.data);
 
   useEffect(() => {
     getUserCurrentLocation();
@@ -170,7 +182,7 @@ function NearMe(props: any): JSX.Element {
 
                 <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
                   <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
-                    <MaterialIcons name="favorite-border" size={30} color="tomato" />
+                    <MaterialIcons name="favorite" size={30} color="tomato" />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -184,8 +196,25 @@ function NearMe(props: any): JSX.Element {
   };
 
   const handleFavouriteIconClick = (item: any) => {
-    console.log('item = ', item);
-    console.log('Constants installationId = ', Constants.installationId);
+    const installationId = Constants.installationId;
+    const newItem = {
+      busStopCode: item.busStopCode,
+      description: item.description,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      roadName: item.roadName,
+    };
+
+    if (installationId && newItem) {
+      addFavourites({
+        variables: {
+          data: {
+            installationId: installationId,
+            item: newItem,
+          },
+        },
+      });
+    }
   };
 
   const handleBusStopCodeClick = (busStopCode: string) => {
@@ -206,7 +235,7 @@ function NearMe(props: any): JSX.Element {
       variables: { latitude: latitude, longitude: longitude },
     });
 
-    if (!loading) {
+    if (!record.loading) {
       setRefreshing(false);
     }
   };

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, ScrollView, View, RefreshControl, Touchabl
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 import { getAsyncStorageData } from '../../common/common';
 
@@ -73,6 +73,14 @@ const GET_BUS_STOP_BY_DESCRIPTION = gql`
   }
 `;
 
+const ADD_FAVOURITES = gql`
+  mutation addFavourites($data: AddFavourites!) {
+    addFavourites(data: $data) {
+      status
+    }
+  }
+`;
+
 function Search(props: any): JSX.Element {
   const [roadName, setRoadName] = useState('');
   const [placeName, setPlaceName] = useState('');
@@ -87,6 +95,8 @@ function Search(props: any): JSX.Element {
   const [getBusStopByRoadName, record] = useLazyQuery(GET_BUS_STOP_BY_ROAD_NAME);
   const [getBusStopByDescrition, record2] = useLazyQuery(GET_BUS_STOP_BY_DESCRIPTION);
 
+  const [addFavourites, addFavouritesResult] = useMutation(ADD_FAVOURITES);
+
   console.log('record loading = ', record.loading);
   console.log('record error = ', record.error);
   console.log('record data = ', record.data);
@@ -94,6 +104,8 @@ function Search(props: any): JSX.Element {
   console.log('record2 loading = ', record2.loading);
   console.log('record2 error = ', record2.error);
   console.log('record2 data = ', record2.data);
+
+  console.log('addFavouritesResult.data = ', addFavouritesResult.data);
 
   useEffect(() => {
     getThemeData();
@@ -193,7 +205,7 @@ function Search(props: any): JSX.Element {
 
                   <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
                     <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
-                      <MaterialIcons name="favorite-border" size={30} color="tomato" />
+                      <MaterialIcons name="favorite" size={30} color="tomato" />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -243,7 +255,7 @@ function Search(props: any): JSX.Element {
 
                   <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
                     <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
-                      <MaterialIcons name="favorite-border" size={30} color="tomato" />
+                      <MaterialIcons name="favorite" size={30} color="tomato" />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -258,8 +270,25 @@ function Search(props: any): JSX.Element {
   };
 
   const handleFavouriteIconClick = (item: any) => {
-    console.log('item = ', item);
-    console.log('Constants installationId = ', Constants.installationId);
+    const installationId = Constants.installationId;
+    const newItem = {
+      busStopCode: item.busStopCode,
+      description: item.description,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      roadName: item.roadName,
+    };
+
+    if (installationId && newItem) {
+      addFavourites({
+        variables: {
+          data: {
+            installationId: installationId,
+            item: newItem,
+          },
+        },
+      });
+    }
   };
 
   const handleBusStopCodeClick = (busStopCode: string) => {
