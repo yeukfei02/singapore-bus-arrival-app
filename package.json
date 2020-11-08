@@ -23,6 +23,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "expo": "~39.0.2",
+    "expo-constants": "^9.2.0",
     "git-cz": "^4.7.1",
     "graphql": "^15.4.0",
     "husky": "^4.3.0",
