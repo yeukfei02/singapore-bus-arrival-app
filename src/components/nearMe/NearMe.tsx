@@ -98,18 +98,18 @@ function NearMe(props: any): JSX.Element {
   }, [data]);
 
   const getUserCurrentLocation = async () => {
-    // navigator.geolocation.getCurrentPosition((position: any) => {
-    //   if (position && position.coords) {
-    //     console.log('latitude = ', position.coords.latitude);
-    //     console.log('longitude = ', position.coords.longitude);
-    //     setLatitude(position.coords.latitude);
-    //     setLongitude(position.coords.longitude);
-    //   }
-    // });
+    navigator.geolocation.getCurrentPosition((position: any) => {
+      if (position && position.coords) {
+        console.log('latitude = ', position.coords.latitude);
+        console.log('longitude = ', position.coords.longitude);
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      }
+    });
 
     // sg location
-    setLatitude(1.352083);
-    setLongitude(103.819839);
+    // setLatitude(1.352083);
+    // setLongitude(103.819839);
   };
 
   const getThemeData = async () => {
