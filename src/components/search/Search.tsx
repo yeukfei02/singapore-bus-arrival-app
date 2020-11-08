@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, ScrollView, View, RefreshControl, TouchableOpacity, Linking } from 'react-native';
+import Constants from 'expo-constants';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { gql, useLazyQuery } from '@apollo/client';
 
@@ -183,11 +185,17 @@ function Search(props: any): JSX.Element {
                     </TouchableOpacity>
                   </View>
 
-                  <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                      Open in google map
-                    </Text>
-                  </TouchableOpacity>
+                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                    <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in google map</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                    <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                      <MaterialIcons name="favorite-border" size={30} color="tomato" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               );
             });
@@ -227,11 +235,17 @@ function Search(props: any): JSX.Element {
                     </TouchableOpacity>
                   </View>
 
-                  <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                      Open in google map
-                    </Text>
-                  </TouchableOpacity>
+                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                    <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in google map</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                    <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                      <MaterialIcons name="favorite-border" size={30} color="tomato" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               );
             });
@@ -241,6 +255,11 @@ function Search(props: any): JSX.Element {
     }
 
     return busStopResultDiv;
+  };
+
+  const handleFavouriteIconClick = (item: any) => {
+    console.log('item = ', item);
+    console.log('Constants installationId = ', Constants.installationId);
   };
 
   const handleBusStopCodeClick = (busStopCode: string) => {

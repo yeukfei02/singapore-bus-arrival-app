@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, ScrollView, View, RefreshControl, TouchableOpacity, Linking } from 'react-native';
+import Constants from 'expo-constants';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { gql, useLazyQuery } from '@apollo/client';
 
@@ -69,11 +71,11 @@ function NearMe(props: any): JSX.Element {
 
   const [responseData, setResponseData] = useState<any>(null);
 
-  const [getBusStopByLatLong, { loading, error, data }] = useLazyQuery(GET_BUS_STOP_BY_LATLONG);
+  const [getBusStopByLatLong, record] = useLazyQuery(GET_BUS_STOP_BY_LATLONG);
 
-  console.log('loading = ', loading);
-  console.log('error = ', error);
-  console.log('data = ', data);
+  console.log('loading = ', record.loading);
+  console.log('error = ', record.error);
+  console.log('data = ', record.data);
 
   useEffect(() => {
     getUserCurrentLocation();
@@ -92,10 +94,10 @@ function NearMe(props: any): JSX.Element {
   }, [latitude, longitude]);
 
   useEffect(() => {
-    if (data) {
-      setResponseData(data);
+    if (record.data) {
+      setResponseData(record.data);
     }
-  }, [data]);
+  }, [record.data]);
 
   const getUserCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition((position: any) => {
@@ -126,14 +128,14 @@ function NearMe(props: any): JSX.Element {
       </View>
     );
 
-    if (loading) {
+    if (record.loading) {
       getBusStopByLatLongResultDiv = (
         <View style={styles.loadingContainer}>
           <Text>Loading...</Text>
         </View>
       );
     } else {
-      if (error) {
+      if (record.error) {
         getBusStopByLatLongResultDiv = (
           <View style={styles.errorContainer}>
             <Text>There is error</Text>
@@ -160,11 +162,17 @@ function NearMe(props: any): JSX.Element {
                   </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
-                  <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                    Open in google map
-                  </Text>
-                </TouchableOpacity>
+                <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                  <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
+                    <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in google map</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                  <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                    <MaterialIcons name="favorite-border" size={30} color="tomato" />
+                  </TouchableOpacity>
+                </View>
               </View>
             );
           });
@@ -173,6 +181,11 @@ function NearMe(props: any): JSX.Element {
     }
 
     return getBusStopByLatLongResultDiv;
+  };
+
+  const handleFavouriteIconClick = (item: any) => {
+    console.log('item = ', item);
+    console.log('Constants installationId = ', Constants.installationId);
   };
 
   const handleBusStopCodeClick = (busStopCode: string) => {
