@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ScrollView, RefreshControl, TouchableOpacity, L
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 import { getAsyncStorageData } from '../../common/common';
 
@@ -67,6 +67,14 @@ const GET_FAVOURITES_BY_INSTALLATION_ID = gql`
   }
 `;
 
+const DELETE_FAVOURITES_BY_ID = gql`
+  mutation deleteFavouritesById($data: DeleteFavourites!) {
+    deleteFavouritesById(data: $data) {
+      status
+    }
+  }
+`;
+
 function Favourites(props: any): JSX.Element {
   const [theme, setTheme] = useState('light');
 
@@ -76,9 +84,13 @@ function Favourites(props: any): JSX.Element {
 
   const [getFavouritesByInstallationId, record] = useLazyQuery(GET_FAVOURITES_BY_INSTALLATION_ID);
 
+  const [deleteFavouritesById, deleteFavouritesResult] = useMutation(DELETE_FAVOURITES_BY_ID);
+
   console.log('record.loading = ', record.loading);
   console.log('record.error = ', record.error);
   console.log('record.data = ', record.data);
+
+  console.log('deleteFavouritesResult.data = ', deleteFavouritesResult.data);
 
   useEffect(() => {
     getThemeData();
@@ -138,6 +150,12 @@ function Favourites(props: any): JSX.Element {
 
               return (
                 <View key={i} style={styles.favouritesResultContainer}>
+                  <View style={{ alignSelf: 'flex-end' }}>
+                    <TouchableOpacity onPress={() => handleDeleteButtonClick(element.id)}>
+                      <MaterialIcons name="delete" size={30} color="black" />
+                    </TouchableOpacity>
+                  </View>
+
                   <Text style={styles.favouritesResultDescriptionText}>{item.description}</Text>
                   <Text style={styles.favouritesResultRoadNameText}>{item.road_name}</Text>
 
@@ -178,6 +196,19 @@ function Favourites(props: any): JSX.Element {
 
   const handleOpenInGoogleMap = (latitude: number, longitude: number) => {
     Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`);
+  };
+
+  const handleDeleteButtonClick = (id: string) => {
+    if (id && Constants.installationId) {
+      deleteFavouritesById({
+        variables: {
+          data: {
+            id: id,
+            installationId: Constants.installationId,
+          },
+        },
+      });
+    }
   };
 
   const onRefresh = () => {
