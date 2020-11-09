@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, ScrollView, View, RefreshControl, TouchableOpacity, Linking } from 'react-native';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
+import _ from 'lodash';
 
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
@@ -112,18 +113,28 @@ function NearMe(props: any): JSX.Element {
   }, [record.data]);
 
   const getUserCurrentLocation = async () => {
+    const singaporeLatitude = 1.3521;
+    const singaporeLongitude = 103.8198;
+
     navigator.geolocation.getCurrentPosition((position: any) => {
       if (position && position.coords) {
         console.log('latitude = ', position.coords.latitude);
         console.log('longitude = ', position.coords.longitude);
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
+        if (
+          _.inRange(position.coords.latitude, singaporeLatitude - 0.5, singaporeLatitude + 0.5) &&
+          _.inRange(position.coords.longitude, singaporeLongitude - 0.5, singaporeLongitude + 0.5)
+        ) {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        } else {
+          setLatitude(singaporeLatitude);
+          setLongitude(singaporeLongitude);
+        }
+      } else {
+        setLatitude(singaporeLatitude);
+        setLongitude(singaporeLongitude);
       }
     });
-
-    // sg location
-    // setLatitude(1.352083);
-    // setLongitude(103.819839);
   };
 
   const getThemeData = async () => {
