@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity, Linking } from 'react-native';
 import { Card, List } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
@@ -147,9 +147,9 @@ function BusArrivalDetails(props: any): JSX.Element {
                   </View>
 
                   <List.Accordion title="Show more">
-                    <Text style={{ marginVertical: 5 }}>{item.load}</Text>
-                    <Text style={{ marginVertical: 5 }}>{item.feature}</Text>
-                    <Text style={{ marginVertical: 5 }}>{item.type}</Text>
+                    <View style={{ marginVertical: 5 }}>{renderLoad(item.load)}</View>
+                    <View style={{ marginVertical: 5 }}>{renderFeature(item.feature)}</View>
+                    <View style={{ marginVertical: 5 }}>{renderType(item.type)}</View>
 
                     <TouchableOpacity onPress={() => handleCheckBusInGoogleMap(item.latitude, item.longitude)}>
                       <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
@@ -177,6 +177,84 @@ function BusArrivalDetails(props: any): JSX.Element {
     }
 
     return busArrivalResultDiv;
+  };
+
+  const renderLoad = (load: string) => {
+    let loadDiv = <Text>{load}</Text>;
+
+    if (load.includes('Seats Available')) {
+      loadDiv = (
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ borderRadius: 12, backgroundColor: 'green', padding: 12 }}></View>
+          <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
+            <Text>{load}</Text>
+          </View>
+        </View>
+      );
+    } else if (load.includes('Standing Available')) {
+      loadDiv = (
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ borderRadius: 12, backgroundColor: 'yellow', padding: 12 }}></View>
+          <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
+            <Text>{load}</Text>
+          </View>
+        </View>
+      );
+    } else if (load.includes('Limited Standing')) {
+      loadDiv = (
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ borderRadius: 12, backgroundColor: 'red', padding: 12 }}></View>
+          <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
+            <Text>{load}</Text>
+          </View>
+        </View>
+      );
+    }
+
+    return loadDiv;
+  };
+
+  const renderFeature = (feature: string) => {
+    let featureDiv = <Text>{feature}</Text>;
+
+    if (feature.includes('Wheel-Chair')) {
+      featureDiv = (
+        <View style={{ flexDirection: 'row' }}>
+          <Image source={require('../../images/wheel-chair.png')} style={{ width: 30, height: 30 }} />
+          <View style={{ justifyContent: 'center', marginHorizontal: 5 }}>
+            <Text>{feature}</Text>
+          </View>
+        </View>
+      );
+    }
+
+    return featureDiv;
+  };
+
+  const renderType = (type: string) => {
+    let typeDiv = <Text>{type}</Text>;
+
+    if (type.includes('Single Deck')) {
+      typeDiv = (
+        <View style={{ flexDirection: 'row' }}>
+          <Image source={require('../../images/bus.png')} style={{ width: 30, height: 30 }} />
+          <View style={{ justifyContent: 'center', marginHorizontal: 5 }}>
+            <Text>{type}</Text>
+          </View>
+        </View>
+      );
+    } else if (type.includes('Double Deck')) {
+      typeDiv = (
+        <View style={{ flexDirection: 'row' }}>
+          <Image source={require('../../images/bus-double-deck.png')} style={{ width: 30, height: 30 }} />
+          <View style={{ justifyContent: 'center', marginHorizontal: 5 }}>
+            <Text>{type}</Text>
+          </View>
+        </View>
+      );
+    }
+
+    return typeDiv;
   };
 
   const handleCheckBusInGoogleMap = (latitude: number, longitude: number) => {
