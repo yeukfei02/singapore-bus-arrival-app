@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
 });
 
 const GET_BUS_STOP_BY_LATLONG = gql`
-  query busStopByLatLong($latitude: Float!, $longitude: Float!) {
-    busStopByLatLong(latitude: $latitude, longitude: $longitude) {
+  query busStopByLatLong($latitude: Float!, $longitude: Float!, $pageNumber: Int!) {
+    busStopByLatLong(latitude: $latitude, longitude: $longitude, pageNumber: $pageNumber) {
       busStopCode
       roadName
       description
@@ -73,6 +73,7 @@ const ADD_FAVOURITES = gql`
 function NearMe(props: any): JSX.Element {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -101,7 +102,7 @@ function NearMe(props: any): JSX.Element {
   useEffect(() => {
     if (latitude != 0 && longitude != 0) {
       getBusStopByLatLong({
-        variables: { latitude: latitude, longitude: longitude },
+        variables: { latitude: latitude, longitude: longitude, pageNumber: pageNumber },
       });
     }
   }, [latitude, longitude]);
@@ -166,11 +167,7 @@ function NearMe(props: any): JSX.Element {
         );
       } else {
         if (responseData && responseData.busStopByLatLong) {
-          const filteredBusStopByLatLongList = responseData.busStopByLatLong.filter((item: any, i: number) => {
-            return i <= 9;
-          });
-
-          getBusStopByLatLongResultDiv = filteredBusStopByLatLongList.map((item: any, i: number) => {
+          getBusStopByLatLongResultDiv = responseData.busStopByLatLong.map((item: any, i: number) => {
             return (
               <View key={i} style={styles.busStopByLatLongResultContainer}>
                 <Text style={styles.busStopByLatLongResultDescriptionText}>{item.description}</Text>
@@ -204,6 +201,22 @@ function NearMe(props: any): JSX.Element {
     }
 
     return getBusStopByLatLongResultDiv;
+  };
+
+  const renderShowMoreButton = () => {
+    let showMoreButton = null;
+
+    if (responseData) {
+      showMoreButton = (
+        <TouchableOpacity style={{ marginVertical: 10 }} onPress={() => handleShowMoreButtonClick()}>
+          <View style={{ backgroundColor: 'tomato', padding: 15, borderRadius: 5 }}>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', color: 'white' }}>SHOW MORE</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+
+    return showMoreButton;
   };
 
   const handleFavouriteIconClick = (item: any) => {
@@ -242,13 +255,26 @@ function NearMe(props: any): JSX.Element {
     setRefreshing(true);
 
     getThemeData();
+    setPageNumber(1);
+    record.client?.clearStore();
+    setResponseData(null);
     getBusStopByLatLong({
-      variables: { latitude: latitude, longitude: longitude },
+      variables: { latitude: latitude, longitude: longitude, pageNumber: pageNumber },
     });
 
     if (!record.loading) {
       setRefreshing(false);
     }
+  };
+
+  const handleShowMoreButtonClick = () => {
+    let newPageNumber = pageNumber;
+    newPageNumber += 1;
+    setPageNumber(newPageNumber);
+
+    getBusStopByLatLong({
+      variables: { latitude: latitude, longitude: longitude, pageNumber: newPageNumber },
+    });
   };
 
   return (
@@ -265,6 +291,8 @@ function NearMe(props: any): JSX.Element {
         <View style={{ marginVertical: 10 }}></View>
 
         {renderGetBusStopByLatLongResult()}
+
+        {renderShowMoreButton()}
       </View>
     </ScrollView>
   );
