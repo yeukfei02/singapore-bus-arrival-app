@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity, Linking } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Image, Platform, TouchableOpacity, Linking } from 'react-native';
 import { Card, List } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
@@ -151,9 +151,9 @@ function BusArrivalDetails(props: any): JSX.Element {
                     <View style={{ marginVertical: 5 }}>{renderFeature(item.feature)}</View>
                     <View style={{ marginVertical: 5 }}>{renderType(item.type)}</View>
 
-                    <TouchableOpacity onPress={() => handleCheckBusInGoogleMap(item.latitude, item.longitude)}>
+                    <TouchableOpacity onPress={() => handleCheckBusInMap(item.latitude, item.longitude)}>
                       <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                        Check bus in google map
+                        Check bus in map
                       </Text>
                     </TouchableOpacity>
                   </List.Accordion>
@@ -257,8 +257,18 @@ function BusArrivalDetails(props: any): JSX.Element {
     return typeDiv;
   };
 
-  const handleCheckBusInGoogleMap = (latitude: number, longitude: number) => {
-    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`);
+  const handleCheckBusInMap = (latitude: number, longitude: number) => {
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${latitude},${longitude}`;
+    const label = 'Bus';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+
+    if (url) {
+      Linking.openURL(url);
+    }
   };
 
   return (
