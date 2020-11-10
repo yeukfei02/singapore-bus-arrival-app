@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "0.1.7",
+    "version": "0.1.8",
     "orientation": "portrait",
     "icon": "./assets/appstore-icon.png",
     "updates": {
@@ -17,7 +17,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.donaldwu.singaporebusarrivalapp",
-      "buildNumber": "0.1.7",
+      "buildNumber": "0.1.8",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
         "NSLocationAlwaysUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.donaldwu.singaporebusarrivalapp",
-      "versionCode": 7,
+      "versionCode": 8,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
