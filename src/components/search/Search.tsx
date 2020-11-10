@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, ScrollView, View, RefreshControl, TouchableOpacity, Linking } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  ScrollView,
+  View,
+  RefreshControl,
+  Platform,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -198,8 +208,8 @@ function Search(props: any): JSX.Element {
                   </View>
 
                   <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                    <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
-                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in google map</Text>
+                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
                     </TouchableOpacity>
                   </View>
 
@@ -248,8 +258,8 @@ function Search(props: any): JSX.Element {
                   </View>
 
                   <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                    <TouchableOpacity onPress={() => handleOpenInGoogleMap(item.latitude, item.longitude)}>
-                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in google map</Text>
+                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
                     </TouchableOpacity>
                   </View>
 
@@ -297,8 +307,18 @@ function Search(props: any): JSX.Element {
     });
   };
 
-  const handleOpenInGoogleMap = (latitude: number, longitude: number) => {
-    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`);
+  const handleOpenInMap = (latitude: number, longitude: number) => {
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${latitude},${longitude}`;
+    const label = 'Bus Stop';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+
+    if (url) {
+      Linking.openURL(url);
+    }
   };
 
   const onRefresh = () => {
