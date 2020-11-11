@@ -327,7 +327,9 @@ function NearMe(props: any): JSX.Element {
               <Paragraph>Are you sure want to add to favourites?</Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={handleCancalButtonClick}>Cancel</Button>
+              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                Cancel
+              </Button>
               <Button onPress={handleConfirmButtonClick}>Confirm</Button>
             </Dialog.Actions>
           </Dialog>
