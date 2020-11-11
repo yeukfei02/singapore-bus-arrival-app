@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'react-native';
-import { Button, Paragraph, Dialog } from 'react-native-paper';
+import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 import { storeDataToAsyncStorage, getAsyncStorageData } from '../../common/common';
@@ -47,11 +47,15 @@ function Settings(props: any): JSX.Element {
     setChangeThemeValue('dark');
   };
 
-  const hideDialog = () => {
+  const handleConfirmButtonClick = () => {
     setVisible(false);
 
     storeDataToAsyncStorage('@theme', changeThemeValue);
     props.navigation.navigate('NearMe');
+  };
+
+  const handleCancalButtonClick = () => {
+    setVisible(false);
   };
 
   const handleEmailIconClick = () => {
@@ -99,19 +103,24 @@ function Settings(props: any): JSX.Element {
             <AntDesign name="github" size={50} color="orchid" />
           </TouchableOpacity>
         </View>
-      </View>
 
-      <Dialog visible={visible}>
-        <Dialog.Title>Change Theme</Dialog.Title>
-        <Dialog.Content>
-          <Paragraph>
-            Confirm to change <Text style={{ fontWeight: 'bold' }}>{changeThemeValue}</Text> theme?
-          </Paragraph>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={hideDialog}>Confirm</Button>
-        </Dialog.Actions>
-      </Dialog>
+        <Portal>
+          <Dialog visible={visible}>
+            <Dialog.Title>Change Theme</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>
+                Confirm to change <Text style={{ fontWeight: 'bold' }}>{changeThemeValue}</Text> theme?
+              </Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                Cancel
+              </Button>
+              <Button onPress={handleConfirmButtonClick}>Confirm</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      </View>
     </ScrollView>
   );
 }

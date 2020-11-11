@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, ScrollView, View, RefreshControl, Platform, TouchableOpacity, Linking } from 'react-native';
+import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
@@ -80,6 +81,10 @@ function NearMe(props: any): JSX.Element {
   const [theme, setTheme] = useState('light');
 
   const [responseData, setResponseData] = useState<any>(null);
+
+  const [visible, setVisible] = useState(false);
+
+  const [item, setItem] = useState<any>({});
 
   const [getBusStopByLatLong, record] = useLazyQuery(GET_BUS_STOP_BY_LATLONG);
 
@@ -220,25 +225,8 @@ function NearMe(props: any): JSX.Element {
   };
 
   const handleFavouriteIconClick = (item: any) => {
-    const installationId = Constants.installationId;
-    const newItem = {
-      busStopCode: item.busStopCode,
-      description: item.description,
-      latitude: item.latitude,
-      longitude: item.longitude,
-      roadName: item.roadName,
-    };
-
-    if (installationId && newItem) {
-      addFavourites({
-        variables: {
-          data: {
-            installationId: installationId,
-            item: newItem,
-          },
-        },
-      });
-    }
+    setVisible(true);
+    setItem(item);
   };
 
   const handleBusStopCodeClick = (busStopCode: string) => {
@@ -287,6 +275,34 @@ function NearMe(props: any): JSX.Element {
     });
   };
 
+  const handleConfirmButtonClick = () => {
+    setVisible(false);
+
+    const installationId = Constants.installationId;
+    const newItem = {
+      busStopCode: item.busStopCode,
+      description: item.description,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      roadName: item.roadName,
+    };
+
+    if (installationId && newItem) {
+      addFavourites({
+        variables: {
+          data: {
+            installationId: installationId,
+            item: newItem,
+          },
+        },
+      });
+    }
+  };
+
+  const handleCancalButtonClick = () => {
+    setVisible(false);
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
@@ -303,6 +319,21 @@ function NearMe(props: any): JSX.Element {
         {renderGetBusStopByLatLongResult()}
 
         {renderShowMoreButton()}
+
+        <Portal>
+          <Dialog visible={visible}>
+            <Dialog.Title>Add favourites</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>Are you sure want to add to favourites?</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                Cancel
+              </Button>
+              <Button onPress={handleConfirmButtonClick}>Confirm</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </View>
     </ScrollView>
   );

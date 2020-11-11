@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
+import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -101,6 +102,10 @@ function Search(props: any): JSX.Element {
 
   const [recordData, setRecordData] = useState<any>(null);
   const [record2Data, setRecord2Data] = useState<any>(null);
+
+  const [visible, setVisible] = useState(false);
+
+  const [item, setItem] = useState<any>({});
 
   const [getBusStopByRoadName, record] = useLazyQuery(GET_BUS_STOP_BY_ROAD_NAME);
   const [getBusStopByDescrition, record2] = useLazyQuery(GET_BUS_STOP_BY_DESCRIPTION);
@@ -280,25 +285,8 @@ function Search(props: any): JSX.Element {
   };
 
   const handleFavouriteIconClick = (item: any) => {
-    const installationId = Constants.installationId;
-    const newItem = {
-      busStopCode: item.busStopCode,
-      description: item.description,
-      latitude: item.latitude,
-      longitude: item.longitude,
-      roadName: item.roadName,
-    };
-
-    if (installationId && newItem) {
-      addFavourites({
-        variables: {
-          data: {
-            installationId: installationId,
-            item: newItem,
-          },
-        },
-      });
-    }
+    setVisible(true);
+    setItem(item);
   };
 
   const handleBusStopCodeClick = (busStopCode: string) => {
@@ -333,6 +321,34 @@ function Search(props: any): JSX.Element {
     if (!record.loading && !record2.loading) {
       setRefreshing(false);
     }
+  };
+
+  const handleConfirmButtonClick = () => {
+    setVisible(false);
+
+    const installationId = Constants.installationId;
+    const newItem = {
+      busStopCode: item.busStopCode,
+      description: item.description,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      roadName: item.roadName,
+    };
+
+    if (installationId && newItem) {
+      addFavourites({
+        variables: {
+          data: {
+            installationId: installationId,
+            item: newItem,
+          },
+        },
+      });
+    }
+  };
+
+  const handleCancalButtonClick = () => {
+    setVisible(false);
   };
 
   return (
@@ -385,6 +401,21 @@ function Search(props: any): JSX.Element {
         <View style={{ marginVertical: 10 }}></View>
 
         {renderBusStopResultDiv()}
+
+        <Portal>
+          <Dialog visible={visible}>
+            <Dialog.Title>Add favourites</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>Are you sure want to add to favourites?</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                Cancel
+              </Button>
+              <Button onPress={handleConfirmButtonClick}>Confirm</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </View>
     </ScrollView>
   );

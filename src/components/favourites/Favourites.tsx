@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, RefreshControl, Platform, TouchableOpacity, Linking } from 'react-native';
+import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -81,6 +82,10 @@ function Favourites(props: any): JSX.Element {
   const [refreshing, setRefreshing] = useState(false);
 
   const [responseData, setResponseData] = useState<any>(null);
+
+  const [visible, setVisible] = useState(false);
+
+  const [id, setId] = useState('');
 
   const [getFavouritesByInstallationId, record] = useLazyQuery(GET_FAVOURITES_BY_INSTALLATION_ID);
 
@@ -209,16 +214,9 @@ function Favourites(props: any): JSX.Element {
   };
 
   const handleDeleteButtonClick = (id: string) => {
-    if (id && Constants.installationId) {
-      deleteFavouritesById({
-        variables: {
-          data: {
-            id: id,
-            installationId: Constants.installationId,
-          },
-        },
-      });
-    }
+    setVisible(true);
+
+    if (id) setId(id);
   };
 
   const onRefresh = () => {
@@ -238,6 +236,25 @@ function Favourites(props: any): JSX.Element {
     }
   };
 
+  const handleConfirmButtonClick = () => {
+    setVisible(false);
+
+    if (id && Constants.installationId) {
+      deleteFavouritesById({
+        variables: {
+          data: {
+            id: id,
+            installationId: Constants.installationId,
+          },
+        },
+      });
+    }
+  };
+
+  const handleCancalButtonClick = () => {
+    setVisible(false);
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
@@ -254,6 +271,21 @@ function Favourites(props: any): JSX.Element {
         <View style={{ marginVertical: 10 }}></View>
 
         {renderFavouritesList()}
+
+        <Portal>
+          <Dialog visible={visible}>
+            <Dialog.Title>Delete favourites</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>Are you sure want to delete this favourite?</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                Cancel
+              </Button>
+              <Button onPress={handleConfirmButtonClick}>Confirm</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </View>
     </ScrollView>
   );
