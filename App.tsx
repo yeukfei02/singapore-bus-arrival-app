@@ -23,6 +23,16 @@ const theme = {
 const client = new ApolloClient({
   uri: 'https://w34wh6x0kh.execute-api.ap-southeast-1.amazonaws.com/v1/',
   cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
+    },
+  },
 });
 
 function App(): JSX.Element {
