@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <!-- <a href="https://apps.apple.com/us/app/singaporebusarrivalapp/id1509385881"><img src="https://github.com/yeukfei02/singapore-bus-arrival-app/blob/main/app-store-badge.png?raw=true" width="30%" height="30%" alt=""></a> -->
+  <a href="https://apps.apple.com/us/app/singapore-bus-arrival/id1539326353"><img src="https://github.com/yeukfei02/singapore-bus-arrival-app/blob/main/app-store-badge.png?raw=true" width="30%" height="30%" alt=""></a>
   <a href="https://play.google.com/store/apps/details?id=com.donaldwu.singaporebusarrivalapp"><img src="https://github.com/yeukfei02/singapore-bus-arrival-app/blob/main/google-play-badge.png?raw=true" width="30%" height="30%" alt=""></a>
 </p>
 
