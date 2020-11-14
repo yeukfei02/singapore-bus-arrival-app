@@ -87,13 +87,15 @@ function Favourites(props: any): JSX.Element {
 
   const [id, setId] = useState('');
 
-  const [getFavouritesByInstallationId, record] = useLazyQuery(GET_FAVOURITES_BY_INSTALLATION_ID);
+  const [getFavouritesByInstallationId, { loading, error, data, client }] = useLazyQuery(
+    GET_FAVOURITES_BY_INSTALLATION_ID,
+  );
 
   const [deleteFavouritesById, deleteFavouritesResult] = useMutation(DELETE_FAVOURITES_BY_ID);
 
-  console.log('record.loading = ', record.loading);
-  console.log('record.error = ', record.error);
-  console.log('record.data = ', record.data);
+  console.log('loading = ', loading);
+  console.log('error = ', error);
+  console.log('data = ', data);
 
   console.log('deleteFavouritesResult.data = ', deleteFavouritesResult.data);
 
@@ -115,10 +117,24 @@ function Favourites(props: any): JSX.Element {
   }, [Constants.installationId]);
 
   useEffect(() => {
-    if (record.data) {
-      setResponseData(record.data);
+    if (data) {
+      setResponseData(data);
     }
-  }, [record.data]);
+  }, [data]);
+
+  useEffect(() => {
+    if (deleteFavouritesResult.data) {
+      if (deleteFavouritesResult.data.deleteFavouritesById.status) {
+        setResponseData(null);
+        deleteFavouritesResult.client.clearStore();
+        getFavouritesByInstallationId({
+          variables: {
+            installationId: Constants.installationId,
+          },
+        });
+      }
+    }
+  }, [deleteFavouritesResult.data]);
 
   const getThemeData = async () => {
     const theme = await getAsyncStorageData('@theme');
@@ -134,14 +150,14 @@ function Favourites(props: any): JSX.Element {
       </View>
     );
 
-    if (record.loading) {
+    if (loading) {
       favouritesListDiv = (
         <View style={styles.loadingContainer}>
           <Text>Loading...</Text>
         </View>
       );
     } else {
-      if (record.error) {
+      if (error) {
         favouritesListDiv = (
           <View style={styles.errorContainer}>
             <Text>There is error</Text>
@@ -223,7 +239,7 @@ function Favourites(props: any): JSX.Element {
     setRefreshing(true);
 
     getThemeData();
-    record.client?.clearStore();
+    client?.clearStore();
     setResponseData(null);
     getFavouritesByInstallationId({
       variables: {
@@ -231,7 +247,7 @@ function Favourites(props: any): JSX.Element {
       },
     });
 
-    if (!record.loading) {
+    if (!loading) {
       setRefreshing(false);
     }
   };

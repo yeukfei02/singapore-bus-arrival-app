@@ -83,16 +83,17 @@ function NearMe(props: any): JSX.Element {
   const [responseData, setResponseData] = useState<any>(null);
 
   const [visible, setVisible] = useState(false);
+  const [enableLocationVisible, setEnableLocationVisible] = useState(false);
 
   const [item, setItem] = useState<any>({});
 
-  const [getBusStopByLatLong, record] = useLazyQuery(GET_BUS_STOP_BY_LATLONG);
+  const [getBusStopByLatLong, { loading, error, data, client }] = useLazyQuery(GET_BUS_STOP_BY_LATLONG);
 
   const [addFavourites, addFavouritesResult] = useMutation(ADD_FAVOURITES);
 
-  console.log('loading = ', record.loading);
-  console.log('error = ', record.error);
-  console.log('data = ', record.data);
+  console.log('loading = ', loading);
+  console.log('error = ', error);
+  console.log('data = ', data);
 
   console.log('addFavouritesResult.data = ', addFavouritesResult.data);
 
@@ -113,34 +114,40 @@ function NearMe(props: any): JSX.Element {
   }, [latitude, longitude]);
 
   useEffect(() => {
-    if (record.data) {
-      setResponseData(record.data);
+    if (data) {
+      setResponseData(data);
     }
-  }, [record.data]);
+  }, [data]);
 
   const getUserCurrentLocation = async () => {
     const singaporeLatitude = 1.3521;
     const singaporeLongitude = 103.8198;
 
-    navigator.geolocation.getCurrentPosition((position: any) => {
-      if (position && position.coords) {
-        console.log('latitude = ', position.coords.latitude);
-        console.log('longitude = ', position.coords.longitude);
-        if (
-          _.inRange(position.coords.latitude, singaporeLatitude - 0.5, singaporeLatitude + 0.5) &&
-          _.inRange(position.coords.longitude, singaporeLongitude - 0.5, singaporeLongitude + 0.5)
-        ) {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
+    navigator.geolocation.getCurrentPosition(
+      (position: any) => {
+        if (position && position.coords) {
+          console.log('latitude = ', position.coords.latitude);
+          console.log('longitude = ', position.coords.longitude);
+          if (
+            _.inRange(position.coords.latitude, singaporeLatitude - 0.5, singaporeLatitude + 0.5) &&
+            _.inRange(position.coords.longitude, singaporeLongitude - 0.5, singaporeLongitude + 0.5)
+          ) {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+          } else {
+            setLatitude(singaporeLatitude);
+            setLongitude(singaporeLongitude);
+          }
         } else {
           setLatitude(singaporeLatitude);
           setLongitude(singaporeLongitude);
         }
-      } else {
-        setLatitude(singaporeLatitude);
-        setLongitude(singaporeLongitude);
-      }
-    });
+      },
+      (error: any) => {
+        console.log('error = ', error);
+        setEnableLocationVisible(true);
+      },
+    );
   };
 
   const getThemeData = async () => {
@@ -157,14 +164,14 @@ function NearMe(props: any): JSX.Element {
       </View>
     );
 
-    if (record.loading) {
+    if (loading) {
       getBusStopByLatLongResultDiv = (
         <View style={styles.loadingContainer}>
           <Text>Loading...</Text>
         </View>
       );
     } else {
-      if (record.error) {
+      if (error) {
         getBusStopByLatLongResultDiv = (
           <View style={styles.errorContainer}>
             <Text>There is error</Text>
@@ -254,13 +261,13 @@ function NearMe(props: any): JSX.Element {
 
     getThemeData();
     setPageNumber(1);
-    record.client?.clearStore();
+    client?.clearStore();
     setResponseData(null);
     getBusStopByLatLong({
       variables: { latitude: latitude, longitude: longitude, pageNumber: pageNumber },
     });
 
-    if (!record.loading) {
+    if (!loading) {
       setRefreshing(false);
     }
   };
@@ -299,8 +306,13 @@ function NearMe(props: any): JSX.Element {
     }
   };
 
+  const handleEnableLocationConfirmButtonClick = () => {
+    setEnableLocationVisible(false);
+  };
+
   const handleCancalButtonClick = () => {
     setVisible(false);
+    setEnableLocationVisible(false);
   };
 
   return (
@@ -331,6 +343,21 @@ function NearMe(props: any): JSX.Element {
                 Cancel
               </Button>
               <Button onPress={handleConfirmButtonClick}>Confirm</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+
+        <Portal>
+          <Dialog visible={enableLocationVisible}>
+            <Dialog.Title>Enable location</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>Please enable your device location.</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                Cancel
+              </Button>
+              <Button onPress={handleEnableLocationConfirmButtonClick}>Confirm</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
