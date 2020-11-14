@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.10...v0.1.11) (2020-11-14)
+
+
+### Features
+
+* 🎸 add delete fav refresh list ([3f0d9da](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/3f0d9da90cd9968760deecb10de6de72e5157f5e))
+
+
+### Bug Fixes
+
+* 🐛 fix usequery param ([9bfcae0](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/9bfcae0be3d71fba8388d17c59e0285bbbcc9557))
+
 ### [0.1.10](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.9...v0.1.10) (2020-11-12)
 
 ### [0.1.9](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.8...v0.1.9) (2020-11-11)
