@@ -122,6 +122,20 @@ function Favourites(props: any): JSX.Element {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (deleteFavouritesResult.data) {
+      if (deleteFavouritesResult.data.deleteFavouritesById.status) {
+        setResponseData(null);
+        deleteFavouritesResult.client.clearStore();
+        getFavouritesByInstallationId({
+          variables: {
+            installationId: Constants.installationId,
+          },
+        });
+      }
+    }
+  }, [deleteFavouritesResult.data]);
+
   const getThemeData = async () => {
     const theme = await getAsyncStorageData('@theme');
     if (theme) {

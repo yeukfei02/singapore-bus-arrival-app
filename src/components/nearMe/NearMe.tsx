@@ -83,6 +83,7 @@ function NearMe(props: any): JSX.Element {
   const [responseData, setResponseData] = useState<any>(null);
 
   const [visible, setVisible] = useState(false);
+  const [enableLocationVisible, setEnableLocationVisible] = useState(false);
 
   const [item, setItem] = useState<any>({});
 
@@ -144,6 +145,7 @@ function NearMe(props: any): JSX.Element {
       },
       (error: any) => {
         console.log('error = ', error);
+        setEnableLocationVisible(true);
       },
     );
   };
@@ -304,8 +306,13 @@ function NearMe(props: any): JSX.Element {
     }
   };
 
+  const handleEnableLocationConfirmButtonClick = () => {
+    setEnableLocationVisible(false);
+  };
+
   const handleCancalButtonClick = () => {
     setVisible(false);
+    setEnableLocationVisible(false);
   };
 
   return (
@@ -336,6 +343,21 @@ function NearMe(props: any): JSX.Element {
                 Cancel
               </Button>
               <Button onPress={handleConfirmButtonClick}>Confirm</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+
+        <Portal>
+          <Dialog visible={enableLocationVisible}>
+            <Dialog.Title>Enable location</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>Please enable your device location.</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                Cancel
+              </Button>
+              <Button onPress={handleEnableLocationConfirmButtonClick}>Confirm</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
