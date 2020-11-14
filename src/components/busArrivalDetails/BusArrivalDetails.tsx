@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, ScrollView, View, Image, Platform, TouchableOpacity, Linking } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  View,
+  Image,
+  Platform,
+  RefreshControl,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import { Card, List } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
@@ -68,7 +78,9 @@ function BusArrivalDetails(props: any): JSX.Element {
 
   const [responseData, setResponseData] = useState<any>(null);
 
-  const [getBusArrival, { loading, error, data }] = useLazyQuery(GET_BUS_ARRIVAL);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const [getBusArrival, { loading, error, data, client }] = useLazyQuery(GET_BUS_ARRIVAL);
 
   console.log('loading = ', loading);
   console.log('error = ', error);
@@ -137,13 +149,15 @@ function BusArrivalDetails(props: any): JSX.Element {
                 timeDiff = 0;
               }
 
+              const absTimeDiff = Math.abs(timeDiff);
+
               return (
                 <Card key={i} style={{ padding: 15, marginVertical: 10 }}>
                   <Text style={{ fontSize: 15, fontWeight: 'bold', marginTop: 10 }}>Next {i + 1} Bus</Text>
 
                   <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                     <Text style={{ fontSize: 18 }}>Remaining: </Text>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{timeDiff} minutes</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{absTimeDiff} minutes</Text>
                   </View>
 
                   <List.Accordion title="Show more">
@@ -271,9 +285,30 @@ function BusArrivalDetails(props: any): JSX.Element {
     }
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    getThemeData();
+    client?.clearStore();
+    setResponseData(null);
+    if (route.params) {
+      const busStopCode = (route.params as any).busStopCode;
+      getBusArrival({
+        variables: { busStopCode: busStopCode },
+      });
+    }
+
+    if (!loading) {
+      setRefreshing(false);
+    }
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['tomato', 'tomato', 'black']} />
+      }
       contentContainerStyle={{ flexGrow: 1 }}
     >
       <View style={styles.viewContainer}>
