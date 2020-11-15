@@ -21,7 +21,7 @@ const theme = {
 };
 
 const client = new ApolloClient({
-  uri: 'https://w34wh6x0kh.execute-api.ap-southeast-1.amazonaws.com/v1/',
+  uri: 'https://uak501unl4.execute-api.ap-southeast-1.amazonaws.com/v1/',
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
