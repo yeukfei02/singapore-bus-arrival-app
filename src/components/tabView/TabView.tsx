@@ -7,7 +7,7 @@ import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import NearMeView from '../nearMeView/NearMeView';
 import SearchView from '../searchView/SearchView';
 import FavouritesView from '../favouritesView/FavouritesView';
-import Settings from '../settings/Settings';
+import SettingsView from '../settingsView/SettingsView';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,7 +63,7 @@ function TabView(): JSX.Element {
         <Tab.Screen name="NearMe" component={NearMeView} />
         <Tab.Screen name="Search" component={SearchView} />
         <Tab.Screen name="Favourites" component={FavouritesView} />
-        <Tab.Screen name="Settings" component={Settings} />
+        <Tab.Screen name="Settings" component={SettingsView} />
       </Tab.Navigator>
     </NavigationContainer>
   );

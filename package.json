@@ -24,6 +24,7 @@
     "eslint-plugin-react": "^7.21.5",
     "expo": "~39.0.2",
     "expo-constants": "^9.2.0",
+    "expo-file-system": "^9.2.0",
     "git-cz": "^4.7.1",
     "graphql": "^15.4.0",
     "husky": "^4.3.0",
@@ -42,6 +43,8 @@
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.12",
+    "react-native-webview": "10.7.0",
+    "rn-pdf-reader-js": "^4.1.1",
     "standard-version": "^9.0.0"
   },
   "devDependencies": {
