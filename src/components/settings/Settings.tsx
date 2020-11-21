@@ -58,6 +58,18 @@ function Settings(props: any): JSX.Element {
     setVisible(false);
   };
 
+  const handleSingaporeMrtCurrentMapClick = () => {
+    props.navigation.navigate(`SingaporeMrtMapPdf`, {
+      uri: 'https://drive.google.com/uc?export=download&id=1hrIwwbgah0FKvWwRdXpvcGEG-AsYr3Yp',
+    });
+  };
+
+  const handleSingaporeMrtFutureMapClick = () => {
+    props.navigation.navigate(`SingaporeMrtMapPdf`, {
+      uri: 'https://drive.google.com/uc?export=download&id=1vZGHSW_5pj5fMOEAhL42f0yCHLS4KaRb',
+    });
+  };
+
   const handleEmailIconClick = () => {
     Linking.openURL(`mailto:yeukfei02@gmail.com`);
   };
@@ -85,6 +97,27 @@ function Settings(props: any): JSX.Element {
           <TouchableOpacity onPress={() => handleDarkThemeClick()}>
             <View style={{ backgroundColor: 'gray', padding: 15, borderRadius: 5 }}>
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>DARK THEME</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ marginVertical: 20 }}></View>
+
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: theme === 'light' ? 'black' : 'white' }}>
+          Singapore Mrt Map
+        </Text>
+
+        <View style={{ marginVertical: 20 }}></View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <TouchableOpacity onPress={() => handleSingaporeMrtCurrentMapClick()}>
+            <View style={{ backgroundColor: 'orange', padding: 15, borderRadius: 5 }}>
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>Current Map</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleSingaporeMrtFutureMapClick()}>
+            <View style={{ backgroundColor: 'lightskyblue', padding: 15, borderRadius: 5 }}>
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>Future Map</Text>
             </View>
           </TouchableOpacity>
         </View>
