@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.13...v0.1.14) (2020-12-05)
+
+
+### Bug Fixes
+
+* 🐛 fix wrong spell and refresh in nearme ([fa3d9a7](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/fa3d9a7244c7b8db5332e664b0e08a6e17398d12))
+
 ### [0.1.13](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.12...v0.1.13) (2020-11-21)
 
 ### [0.1.12](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.11...v0.1.12) (2020-11-15)
