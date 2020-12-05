@@ -91,6 +91,9 @@ function NearMe(props: any): JSX.Element {
 
   const [addFavourites, addFavouritesResult] = useMutation(ADD_FAVOURITES);
 
+  console.log('latitude = ', latitude);
+  console.log('longitude = ', longitude);
+
   console.log('loading = ', loading);
   console.log('error = ', error);
   console.log('data = ', data);
@@ -129,8 +132,8 @@ function NearMe(props: any): JSX.Element {
           console.log('latitude = ', position.coords.latitude);
           console.log('longitude = ', position.coords.longitude);
           if (
-            _.inRange(position.coords.latitude, singaporeLatitude - 0.5, singaporeLatitude + 0.5) &&
-            _.inRange(position.coords.longitude, singaporeLongitude - 0.5, singaporeLongitude + 0.5)
+            _.inRange(position.coords.latitude, singaporeLatitude - 3, singaporeLatitude + 3) &&
+            _.inRange(position.coords.longitude, singaporeLongitude - 3, singaporeLongitude + 3)
           ) {
             setLatitude(position.coords.latitude);
             setLongitude(position.coords.longitude);
@@ -259,13 +262,17 @@ function NearMe(props: any): JSX.Element {
   const onRefresh = () => {
     setRefreshing(true);
 
+    setLatitude(0);
+    setLongitude(0);
+    getUserCurrentLocation();
+
     getThemeData();
     setPageNumber(1);
     client?.clearStore();
     setResponseData(null);
-    getBusStopByLatLong({
-      variables: { latitude: latitude, longitude: longitude, pageNumber: pageNumber },
-    });
+    // getBusStopByLatLong({
+    //   variables: { latitude: latitude, longitude: longitude, pageNumber: pageNumber },
+    // });
 
     if (!loading) {
       setRefreshing(false);
@@ -310,7 +317,7 @@ function NearMe(props: any): JSX.Element {
     setEnableLocationVisible(false);
   };
 
-  const handleCancalButtonClick = () => {
+  const handleCancelButtonClick = () => {
     setVisible(false);
     setEnableLocationVisible(false);
   };
@@ -339,7 +346,7 @@ function NearMe(props: any): JSX.Element {
               <Paragraph>Are you sure want to add to favourites?</Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+              <Button color="#1197d5" onPress={handleCancelButtonClick}>
                 Cancel
               </Button>
               <Button onPress={handleConfirmButtonClick}>Confirm</Button>
@@ -354,7 +361,7 @@ function NearMe(props: any): JSX.Element {
               <Paragraph>Please enable your device location.</Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button color="#1197d5" onPress={handleCancalButtonClick}>
+              <Button color="#1197d5" onPress={handleCancelButtonClick}>
                 Cancel
               </Button>
               <Button onPress={handleEnableLocationConfirmButtonClick}>Confirm</Button>

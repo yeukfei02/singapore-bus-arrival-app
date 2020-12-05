@@ -107,18 +107,18 @@ function Search(props: any): JSX.Element {
 
   const [item, setItem] = useState<any>({});
 
-  const [getBusStopByRoadName, record] = useLazyQuery(GET_BUS_STOP_BY_ROAD_NAME);
-  const [getBusStopByDescrition, record2] = useLazyQuery(GET_BUS_STOP_BY_DESCRIPTION);
+  const [getBusStopByRoadName, getBusStopByRoadNameResult] = useLazyQuery(GET_BUS_STOP_BY_ROAD_NAME);
+  const [getBusStopByDescription, getBusStopByDescriptionResult] = useLazyQuery(GET_BUS_STOP_BY_DESCRIPTION);
 
   const [addFavourites, addFavouritesResult] = useMutation(ADD_FAVOURITES);
 
-  console.log('record loading = ', record.loading);
-  console.log('record error = ', record.error);
-  console.log('record data = ', record.data);
+  console.log('getBusStopByRoadNameResult loading = ', getBusStopByRoadNameResult.loading);
+  console.log('getBusStopByRoadNameResult error = ', getBusStopByRoadNameResult.error);
+  console.log('getBusStopByRoadNameResult data = ', getBusStopByRoadNameResult.data);
 
-  console.log('record2 loading = ', record2.loading);
-  console.log('record2 error = ', record2.error);
-  console.log('record2 data = ', record2.data);
+  console.log('getBusStopByDescriptionResult loading = ', getBusStopByDescriptionResult.loading);
+  console.log('getBusStopByDescriptionResult error = ', getBusStopByDescriptionResult.error);
+  console.log('getBusStopByDescriptionResult data = ', getBusStopByDescriptionResult.data);
 
   console.log('addFavouritesResult.data = ', addFavouritesResult.data);
 
@@ -137,21 +137,21 @@ function Search(props: any): JSX.Element {
 
   useEffect(() => {
     if (placeName && placeName.length > 3) {
-      getBusStopByDescrition({ variables: { description: placeName } });
+      getBusStopByDescription({ variables: { description: placeName } });
     }
   }, [placeName]);
 
   useEffect(() => {
-    if (record.data) {
-      setRecordData(record.data);
+    if (getBusStopByRoadNameResult.data) {
+      setRecordData(getBusStopByRoadNameResult.data);
     }
-  }, [record.data]);
+  }, [getBusStopByRoadNameResult.data]);
 
   useEffect(() => {
-    if (record2.data) {
-      setRecord2Data(record2.data);
+    if (getBusStopByDescriptionResult.data) {
+      setRecord2Data(getBusStopByDescriptionResult.data);
     }
-  }, [record2.data]);
+  }, [getBusStopByDescriptionResult.data]);
 
   const getThemeData = async () => {
     const theme = await getAsyncStorageData('@theme');
@@ -181,14 +181,14 @@ function Search(props: any): JSX.Element {
       </View>
     );
 
-    if (record.loading) {
+    if (getBusStopByRoadNameResult.loading) {
       busStopResultDiv = (
         <View style={styles.loadingContainer}>
           <Text>Loading...</Text>
         </View>
       );
     } else {
-      if (record.error) {
+      if (getBusStopByRoadNameResult.error) {
         busStopResultDiv = (
           <View style={styles.errorContainer}>
             <Text>There is error</Text>
@@ -231,14 +231,14 @@ function Search(props: any): JSX.Element {
       }
     }
 
-    if (record2.loading) {
+    if (getBusStopByDescriptionResult.loading) {
       busStopResultDiv = (
         <View style={styles.loadingContainer}>
           <Text>Loading...</Text>
         </View>
       );
     } else {
-      if (record2.error) {
+      if (getBusStopByDescriptionResult.error) {
         busStopResultDiv = (
           <View style={styles.errorContainer}>
             <Text>There is error</Text>
@@ -318,7 +318,7 @@ function Search(props: any): JSX.Element {
     setRecordData(null);
     setRecord2Data(null);
 
-    if (!record.loading && !record2.loading) {
+    if (!getBusStopByRoadNameResult.loading && !getBusStopByDescriptionResult.loading) {
       setRefreshing(false);
     }
   };
