@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.14...v0.1.15) (2020-12-08)
+
+
+### Features
+
+* 🎸 add snackbar after click theme ([c01d7c4](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/c01d7c4bd80cff3cd3884b32680a5ac81b5bbefe))
+
 ### [0.1.14](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.13...v0.1.14) (2020-12-05)
 
 
