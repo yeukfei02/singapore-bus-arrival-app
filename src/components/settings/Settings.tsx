@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'react-native';
-import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
+import { Button, Portal, Paragraph, Dialog, Snackbar } from 'react-native-paper';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 import { storeDataToAsyncStorage, getAsyncStorageData } from '../../common/common';
@@ -22,6 +22,8 @@ function Settings(props: any): JSX.Element {
   const [changeThemeValue, setChangeThemeValue] = useState('');
 
   const [visible, setVisible] = useState(false);
+
+  const [snackBarVisible, setSnackBarVisible] = useState(false);
 
   useEffect(() => {
     getThemeData();
@@ -51,11 +53,16 @@ function Settings(props: any): JSX.Element {
     setVisible(false);
 
     storeDataToAsyncStorage('@theme', changeThemeValue);
-    props.navigation.navigate('NearMe');
+
+    setSnackBarVisible(true);
   };
 
   const handleCancalButtonClick = () => {
     setVisible(false);
+  };
+
+  const onDismissSnackBar = () => {
+    setSnackBarVisible(false);
   };
 
   const handleSingaporeMrtCurrentMapClick = () => {
@@ -154,6 +161,22 @@ function Settings(props: any): JSX.Element {
           </Dialog>
         </Portal>
       </View>
+
+      <Snackbar
+        style={{ backgroundColor: changeThemeValue === 'light' ? 'tomato' : 'gray' }}
+        theme={{ colors: { accent: 'white' } }}
+        visible={snackBarVisible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'Close',
+          onPress: () => {
+            // Do something
+          },
+        }}
+        duration={1500}
+      >
+        Already change to {changeThemeValue} theme
+      </Snackbar>
     </ScrollView>
   );
 }
