@@ -11,7 +11,7 @@ import {
   Linking,
 } from 'react-native';
 import { Card, List } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import moment from 'moment';
 
@@ -313,7 +313,7 @@ function BusArrivalDetails(props: any): JSX.Element {
     >
       <View style={styles.viewContainer}>
         <TouchableOpacity onPress={() => handleBackButtonClick()}>
-          <Ionicons name="md-arrow-round-back" size={24} color={theme === 'light' ? 'black' : 'white'} />
+          <MaterialIcons name="arrow-back" size={24} color={theme === 'light' ? 'black' : 'white'} />
         </TouchableOpacity>
 
         <View style={{ marginVertical: 15 }}></View>
