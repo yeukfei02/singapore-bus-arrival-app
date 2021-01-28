@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.20...v0.2.1) (2021-01-28)
+
 ### [0.1.20](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.1.19...v0.1.20) (2021-01-28)
 
 
