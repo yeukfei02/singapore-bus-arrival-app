@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.6](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.5...v0.2.6) (2021-07-31)
+
+
+### Bug Fixes
+
+* 🐛 update api url ([f47996a](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/f47996afe0661cc63854f9ca16164eb0ea4abad7))
+* 🐛 update version for new api url ([57d4701](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/57d47018557a29e727c6dfe8e3b19c240477cef4))
+
 ### [0.2.5](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.2...v0.2.5) (2021-05-04)
 
 
