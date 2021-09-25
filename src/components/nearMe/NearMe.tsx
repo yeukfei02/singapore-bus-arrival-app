@@ -259,14 +259,14 @@ function NearMe(props: any): JSX.Element {
     }
   };
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
 
     setLatitude(0);
     setLongitude(0);
-    getUserCurrentLocation();
+    await getUserCurrentLocation();
 
-    getThemeData();
+    await getThemeData();
     setPageNumber(1);
     client?.clearStore();
     setResponseData(null);
