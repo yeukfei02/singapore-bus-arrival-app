@@ -122,7 +122,7 @@ function NearMe(props: any): JSX.Element {
     }
   }, [data]);
 
-  const getUserCurrentLocation = async () => {
+  const getUserCurrentLocation = () => {
     const singaporeLatitude = 1.3521;
     const singaporeLongitude = 103.8198;
 
@@ -264,7 +264,7 @@ function NearMe(props: any): JSX.Element {
 
     setLatitude(0);
     setLongitude(0);
-    await getUserCurrentLocation();
+    getUserCurrentLocation();
 
     await getThemeData();
     setPageNumber(1);
