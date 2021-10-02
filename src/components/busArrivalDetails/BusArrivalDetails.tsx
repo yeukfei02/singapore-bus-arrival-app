@@ -49,6 +49,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 10,
   },
+  busArrivalResultHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });
 
 const GET_BUS_ARRIVAL = gql`
@@ -143,6 +148,16 @@ function BusArrivalDetails(props: any): JSX.Element {
         if (responseData && responseData.busArrival.services) {
           busArrivalResultDiv = responseData.busArrival.services.map((item: any, i: number) => {
             const nextBusList = item.nextBus;
+
+            let firstBusTimeDiffStr = 'Arriving';
+            let firstBusTimeDiff = moment(nextBusList[0].estimatedArrival).diff(moment(), 'minutes');
+            if (isNaN(firstBusTimeDiff)) {
+              firstBusTimeDiff = 0;
+            }
+            if (firstBusTimeDiff > 0) {
+              firstBusTimeDiffStr = `${firstBusTimeDiff.toString()} mins`;
+            }
+
             const nextBusListResultDiv = nextBusList.map((item: any, i: number) => {
               let timeDiff = moment(item.estimatedArrival).diff(moment(), 'minutes');
               if (isNaN(timeDiff)) {
@@ -177,8 +192,11 @@ function BusArrivalDetails(props: any): JSX.Element {
 
             return (
               <View key={i} style={styles.busArrivalResultContainer}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.busNumber}</Text>
-                <Text style={{ marginVertical: 10 }}>{item.operator}</Text>
+                <View style={styles.busArrivalResultHeaderContainer}>
+                  <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.busNumber}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{firstBusTimeDiffStr}</Text>
+                </View>
+                <Text style={{ marginVertical: 15 }}>{item.operator}</Text>
 
                 <List.Accordion title="Show details">
                   <View>{nextBusListResultDiv}</View>
