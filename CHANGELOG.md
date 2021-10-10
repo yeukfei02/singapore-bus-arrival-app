@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.8](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.7...v0.2.8) (2021-10-10)
+
+
+### Bug Fixes
+
+* 🐛 update to smaller lat long range ([6ac5881](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/6ac5881babc704432646d0694b86d250ad066a56))
+* 🐛 update version in app.json ([b676c94](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/b676c940e3595f62b6b2da7d53da7e446022637f))
+
 ### [0.2.7](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.6...v0.2.7) (2021-10-02)
 
 
