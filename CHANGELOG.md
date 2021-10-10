@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.6...v0.2.7) (2021-10-02)
+
+
+### Features
+
+* 🎸 add firstBusTimeDiffStr in BusArrivalDetails ([c63d3c7](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/c63d3c7033fce362e860c1e864efc6f4e9a60bfe))
+
+
+### Bug Fixes
+
+* 🐛 add missing async await ([75d619a](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/75d619a5c5cb5361104a612f1d979378f05319b1))
+* 🐛 remove not used async ([221226f](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/221226f2f09012434530b12c4159723bb0b7e0b8))
+* 🐛 update lib version ([bd3c2d2](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/bd3c2d26e1c2c35cd5e5ea3b080543622604754a))
+
 ### [0.2.6](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.5...v0.2.6) (2021-07-31)
 
 
