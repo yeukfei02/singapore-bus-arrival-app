@@ -84,6 +84,18 @@ const GET_BUS_STOP_BY_DESCRIPTION = gql`
   }
 `;
 
+const GET_BUS_STOP_BY_BUS_STOP_CODE = gql`
+  query busStopByBusStopCode($busStopCode: String!) {
+    busStopByBusStopCode(busStopCode: $busStopCode) {
+      busStopCode
+      roadName
+      description
+      latitude
+      longitude
+    }
+  }
+`;
+
 const ADD_FAVOURITES = gql`
   mutation addFavourites($data: AddFavourites!) {
     addFavourites(data: $data) {
@@ -95,6 +107,7 @@ const ADD_FAVOURITES = gql`
 function Search(props: any): JSX.Element {
   const [roadName, setRoadName] = useState('');
   const [placeName, setPlaceName] = useState('');
+  const [busStopCode, setBusStopCode] = useState('');
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -102,6 +115,7 @@ function Search(props: any): JSX.Element {
 
   const [recordData, setRecordData] = useState<any>(null);
   const [record2Data, setRecord2Data] = useState<any>(null);
+  const [record3Data, setRecord3Data] = useState<any>(null);
 
   const [visible, setVisible] = useState(false);
 
@@ -109,6 +123,7 @@ function Search(props: any): JSX.Element {
 
   const [getBusStopByRoadName, getBusStopByRoadNameResult] = useLazyQuery(GET_BUS_STOP_BY_ROAD_NAME);
   const [getBusStopByDescription, getBusStopByDescriptionResult] = useLazyQuery(GET_BUS_STOP_BY_DESCRIPTION);
+  const [getBusStopByBusStopCode, getBusStopByBusStopCodeResult] = useLazyQuery(GET_BUS_STOP_BY_BUS_STOP_CODE);
 
   const [addFavourites, addFavouritesResult] = useMutation(ADD_FAVOURITES);
 
@@ -119,6 +134,10 @@ function Search(props: any): JSX.Element {
   console.log('getBusStopByDescriptionResult loading = ', getBusStopByDescriptionResult.loading);
   console.log('getBusStopByDescriptionResult error = ', getBusStopByDescriptionResult.error);
   console.log('getBusStopByDescriptionResult data = ', getBusStopByDescriptionResult.data);
+
+  console.log('getBusStopByBusStopCodeResult loading = ', getBusStopByBusStopCodeResult.loading);
+  console.log('getBusStopByBusStopCodeResult error = ', getBusStopByBusStopCodeResult.error);
+  console.log('getBusStopByBusStopCodeResult data = ', getBusStopByBusStopCodeResult.data);
 
   console.log('addFavouritesResult.data = ', addFavouritesResult.data);
 
@@ -142,6 +161,12 @@ function Search(props: any): JSX.Element {
   }, [placeName]);
 
   useEffect(() => {
+    if (busStopCode && busStopCode.length > 3) {
+      getBusStopByBusStopCode({ variables: { busStopCode: busStopCode } });
+    }
+  }, [busStopCode]);
+
+  useEffect(() => {
     if (getBusStopByRoadNameResult.data) {
       setRecordData(getBusStopByRoadNameResult.data);
     }
@@ -153,6 +178,12 @@ function Search(props: any): JSX.Element {
     }
   }, [getBusStopByDescriptionResult.data]);
 
+  useEffect(() => {
+    if (getBusStopByBusStopCodeResult.data) {
+      setRecord3Data(getBusStopByBusStopCodeResult.data);
+    }
+  }, [getBusStopByBusStopCodeResult.data]);
+
   const getThemeData = async () => {
     const theme = await getAsyncStorageData('@theme');
     if (theme) {
@@ -163,6 +194,7 @@ function Search(props: any): JSX.Element {
   const handleRoadNameChange = (text: string) => {
     setRecordData(null);
     setRecord2Data(null);
+    setRecord3Data(null);
 
     setRoadName(text);
   };
@@ -170,8 +202,17 @@ function Search(props: any): JSX.Element {
   const handlePlaceNameChange = (text: string) => {
     setRecordData(null);
     setRecord2Data(null);
+    setRecord3Data(null);
 
     setPlaceName(text);
+  };
+
+  const handleBusStopCodeChange = (text: string) => {
+    setRecordData(null);
+    setRecord2Data(null);
+    setRecord3Data(null);
+
+    setBusStopCode(text);
   };
 
   const renderBusStopResultDiv = () => {
@@ -281,6 +322,56 @@ function Search(props: any): JSX.Element {
       }
     }
 
+    if (getBusStopByBusStopCodeResult.loading) {
+      busStopResultDiv = (
+        <View style={styles.loadingContainer}>
+          <Text>Loading...</Text>
+        </View>
+      );
+    } else {
+      if (getBusStopByBusStopCodeResult.error) {
+        busStopResultDiv = (
+          <View style={styles.errorContainer}>
+            <Text>There is error</Text>
+          </View>
+        );
+      } else {
+        if (record3Data) {
+          if (record3Data.busStopByBusStopCode) {
+            busStopResultDiv = record3Data.busStopByBusStopCode.map((item: any, i: number) => {
+              return (
+                <View key={i} style={styles.busStopResultContainer}>
+                  <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
+                  <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
+
+                  <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+                    <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
+                    <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                      <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                        {item.busStopCode}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                    <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                      <MaterialIcons name="favorite" size={30} color="tomato" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            });
+          }
+        }
+      }
+    }
+
     return busStopResultDiv;
   };
 
@@ -315,10 +406,17 @@ function Search(props: any): JSX.Element {
     getThemeData();
     setRoadName('');
     setPlaceName('');
+    setBusStopCode('');
+
     setRecordData(null);
     setRecord2Data(null);
+    setRecord3Data(null);
 
-    if (!getBusStopByRoadNameResult.loading && !getBusStopByDescriptionResult.loading) {
+    if (
+      !getBusStopByRoadNameResult.loading &&
+      !getBusStopByDescriptionResult.loading &&
+      !getBusStopByBusStopCodeResult.loading
+    ) {
       setRefreshing(false);
     }
   };
@@ -374,7 +472,7 @@ function Search(props: any): JSX.Element {
             borderRadius: 5,
             opacity: 0.7,
           }}
-          placeholder="Roadname"
+          placeholder="Road Name"
           placeholderTextColor="black"
           onChangeText={(text) => handleRoadNameChange(text)}
           value={roadName}
@@ -396,6 +494,24 @@ function Search(props: any): JSX.Element {
           placeholderTextColor="black"
           onChangeText={(text) => handlePlaceNameChange(text)}
           value={placeName}
+        />
+
+        <View style={{ marginVertical: 10 }}></View>
+
+        <TextInput
+          style={{
+            height: 60,
+            padding: 10,
+            backgroundColor: 'gainsboro',
+            borderColor: 'black',
+            borderWidth: 1,
+            borderRadius: 5,
+            opacity: 0.7,
+          }}
+          placeholder="Bus Stop Code"
+          placeholderTextColor="black"
+          onChangeText={(text) => handleBusStopCodeChange(text)}
+          value={busStopCode}
         />
 
         <View style={{ marginVertical: 10 }}></View>
