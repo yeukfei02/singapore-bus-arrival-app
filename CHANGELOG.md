@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.10](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.9...v0.2.10) (2021-10-24)
+
+
+### Features
+
+* 🎸 add ActivityIndicator and custom back button ([8b32574](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/8b325748b90335f0750511f92af606339786d15d))
+* 🎸 add bus map view ([d84b81a](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/d84b81a41d9f501f7849f02a02738600e422a618))
+* 🎸 use camera in mapview ([b791e29](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/b791e299f75598c66d23353a8c4a4008e26587d8))
+
+
+### Bug Fixes
+
+* 🐛 update latitude and longitude range ([853232f](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/853232f8687d5cf55d9c4a2a5b3cd2a5adcaeb2d))
+
+### [0.2.9](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.8...v0.2.9) (2021-10-10)
+
+
+### Features
+
+* 🎸 add busStopByBusStopCode func ([1719cf3](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/1719cf3b6b972345373518abd53e713177b7fbbb))
+
+### [0.2.8](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.7...v0.2.8) (2021-10-10)
+
+
+### Bug Fixes
+
+* 🐛 update to smaller lat long range ([6ac5881](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/6ac5881babc704432646d0694b86d250ad066a56))
+* 🐛 update version in app.json ([b676c94](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/b676c940e3595f62b6b2da7d53da7e446022637f))
+
 ### [0.2.7](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.6...v0.2.7) (2021-10-02)
 
 

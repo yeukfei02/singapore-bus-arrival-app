@@ -1,5 +1,5 @@
 {
-  "version": "0.2.7",
+  "version": "0.2.10",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.0.tar.gz",
     "react-native-gesture-handler": "~1.8.0",
+    "react-native-maps": "^0.29.3",
     "react-native-paper": "^4.3.1",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
