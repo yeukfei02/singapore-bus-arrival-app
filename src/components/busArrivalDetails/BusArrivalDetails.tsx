@@ -124,6 +124,14 @@ function BusArrivalDetails(props: any): JSX.Element {
     props.navigation.goBack();
   };
 
+  const handleBusNumberClick = (busNumber: string) => {
+    if (busNumber) {
+      props.navigation.navigate(`BusMapView`, {
+        busServiceNo: busNumber,
+      });
+    }
+  };
+
   const renderBusArrivalResultDiv = () => {
     let busArrivalResultDiv = (
       <View style={styles.noDataContainer}>
@@ -193,7 +201,12 @@ function BusArrivalDetails(props: any): JSX.Element {
             return (
               <View key={i} style={styles.busArrivalResultContainer}>
                 <View style={styles.busArrivalResultHeaderContainer}>
-                  <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.busNumber}</Text>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: 'bold', textDecorationLine: 'underline' }}
+                    onPress={() => handleBusNumberClick(item.busNumber)}
+                  >
+                    {item.busNumber}
+                  </Text>
                   <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{firstBusTimeDiffStr}</Text>
                 </View>
                 <Text style={{ marginVertical: 15 }}>{item.operator}</Text>

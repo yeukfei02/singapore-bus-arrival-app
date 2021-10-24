@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import NearMe from '../nearMe/NearMe';
 import BusArrivalDetails from '../busArrivalDetails/BusArrivalDetails';
+import BusMapView from '../busMapView/BusMapView';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,7 @@ function NearMeView(): JSX.Element {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="NearMe" component={NearMe} />
         <Stack.Screen name="BusArrivalDetails" component={BusArrivalDetails} />
+        <Stack.Screen name="BusMapView" component={BusMapView} />
       </Stack.Navigator>
     </NavigationContainer>
   );
