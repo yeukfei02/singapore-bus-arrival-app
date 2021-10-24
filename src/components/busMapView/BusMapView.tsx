@@ -84,11 +84,19 @@ function BusMapView(props: any): JSX.Element {
 
   const [theme, setTheme] = useState('light');
 
-  const [region, setRegion] = useState({
-    latitude: singaporeLatitude,
-    longitude: singaporeLongitude,
-    latitudeDelta: 0.05,
-    longitudeDelta: 0.05,
+  const [camera, setCamera] = useState({
+    center: {
+      latitude: singaporeLatitude,
+      longitude: singaporeLongitude,
+    },
+    pitch: 12,
+    heading: 12,
+
+    // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
+    altitude: 80000,
+
+    // Only when using Google Maps.
+    zoom: 12,
   });
 
   const [responseData, setResponseData] = useState<any>(null);
@@ -189,7 +197,7 @@ function BusMapView(props: any): JSX.Element {
 
           busMapViewResultDiv = (
             <View style={styles.mapContainer}>
-              <MapView style={styles.map} region={region} showsUserLocation={true} followsUserLocation={true}>
+              <MapView style={styles.map} camera={camera}>
                 {renderMarkers(markerList)}
                 {renderPolyline(coordinatesList)}
               </MapView>
