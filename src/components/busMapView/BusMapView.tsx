@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, RefreshControl, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  RefreshControl,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
@@ -13,24 +21,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  viewContainer: {
-    marginVertical: 65,
-    marginHorizontal: 30,
-  },
   noDataContainer: {
-    backgroundColor: 'gainsboro',
-    padding: 20,
-    borderRadius: 5,
+    flex: 1,
+    justifyContent: 'center',
   },
   loadingContainer: {
-    backgroundColor: 'moccasin',
-    padding: 20,
-    borderRadius: 5,
+    flex: 1,
+    justifyContent: 'center',
   },
   errorContainer: {
-    backgroundColor: 'tomato',
-    padding: 20,
-    borderRadius: 5,
+    flex: 1,
+    justifyContent: 'center',
   },
   mapContainer: {
     flex: 1,
@@ -156,21 +157,21 @@ function BusMapView(props: any): JSX.Element {
   const renderBusMapViewResultDiv = () => {
     let busMapViewResultDiv = (
       <View style={styles.noDataContainer}>
-        <Text>There is no data</Text>
+        <ActivityIndicator size="large" color="tomato" />
       </View>
     );
 
     if (loading) {
       busMapViewResultDiv = (
         <View style={styles.loadingContainer}>
-          <Text>Loading...</Text>
+          <ActivityIndicator size="large" color="tomato" />
         </View>
       );
     } else {
       if (error) {
         busMapViewResultDiv = (
           <View style={styles.errorContainer}>
-            <Text>There is error</Text>
+            <ActivityIndicator size="large" color="tomato" />
           </View>
         );
       } else {
@@ -192,6 +193,19 @@ function BusMapView(props: any): JSX.Element {
                 {renderMarkers(markerList)}
                 {renderPolyline(coordinatesList)}
               </MapView>
+
+              <View
+                style={{
+                  position: 'absolute',
+                  top: '8%',
+                  left: '6%',
+                  alignSelf: 'flex-start',
+                }}
+              >
+                <TouchableOpacity onPress={() => handleBackButtonClick()}>
+                  <MaterialIcons name="arrow-back" size={24} color={theme === 'light' ? 'black' : 'white'} />
+                </TouchableOpacity>
+              </View>
             </View>
           );
         }
@@ -269,21 +283,7 @@ function BusMapView(props: any): JSX.Element {
       }
       contentContainerStyle={{ flexGrow: 1 }}
     >
-      <View style={styles.viewContainer}>
-        <TouchableOpacity onPress={() => handleBackButtonClick()}>
-          <MaterialIcons name="arrow-back" size={24} color={theme === 'light' ? 'black' : 'white'} />
-        </TouchableOpacity>
-
-        <View style={{ marginVertical: 15 }}></View>
-
-        <Text style={{ fontSize: 25, fontWeight: 'bold', color: theme === 'light' ? 'black' : 'white' }}>
-          Bus Map View
-        </Text>
-
-        <View style={{ marginVertical: 15 }}></View>
-
-        {renderBusMapViewResultDiv()}
-      </View>
+      <View style={styles.container}>{renderBusMapViewResultDiv()}</View>
     </ScrollView>
   );
 }
