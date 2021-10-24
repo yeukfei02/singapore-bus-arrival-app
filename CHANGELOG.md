@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.10...v0.3.0) (2021-10-24)
+
+
+### Bug Fixes
+
+* 🐛 fix react-native-maps version ([f760e25](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/f760e255957f0a33203b629cc0b7145089322b69))
+* 🐛 update app.json ([4972f01](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/4972f01a5b29e042361df4787db426f7f19eea42))
+
 ### [0.2.10](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.2.9...v0.2.10) (2021-10-24)
 
 
