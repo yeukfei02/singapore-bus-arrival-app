@@ -211,7 +211,7 @@ function BusMapView(props: any): JSX.Element {
                 }}
               >
                 <TouchableOpacity onPress={() => handleBackButtonClick()}>
-                  <MaterialIcons name="arrow-back" size={24} color={theme === 'light' ? 'black' : 'white'} />
+                  <MaterialIcons name="arrow-back" size={24} color={'black'} />
                 </TouchableOpacity>
               </View>
             </View>

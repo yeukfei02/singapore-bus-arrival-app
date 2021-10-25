@@ -4,6 +4,7 @@ import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 import _ from 'lodash';
+import * as Location from 'expo-location';
 
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
@@ -126,31 +127,31 @@ function NearMe(props: any): JSX.Element {
     const singaporeLatitude = 1.3521;
     const singaporeLongitude = 103.8198;
 
-    navigator.geolocation.getCurrentPosition(
-      (position: any) => {
-        if (position && position.coords) {
-          console.log('latitude = ', position.coords.latitude);
-          console.log('longitude = ', position.coords.longitude);
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status === 'granted') {
+          const location = await Location.getCurrentPositionAsync({});
+          console.log('latitude = ', location.coords.latitude);
+          console.log('longitude = ', location.coords.longitude);
           if (
-            _.inRange(position.coords.latitude, singaporeLatitude - 0.05, singaporeLatitude + 0.05) &&
-            _.inRange(position.coords.longitude, singaporeLongitude - 0.05, singaporeLongitude + 0.05)
+            _.inRange(location.coords.latitude, singaporeLatitude - 0.05, singaporeLatitude + 0.05) &&
+            _.inRange(location.coords.longitude, singaporeLongitude - 0.05, singaporeLongitude + 0.05)
           ) {
-            setLatitude(position.coords.latitude);
-            setLongitude(position.coords.longitude);
+            setLatitude(location.coords.latitude);
+            setLongitude(location.coords.longitude);
           } else {
             setLatitude(singaporeLatitude);
             setLongitude(singaporeLongitude);
           }
         } else {
-          setLatitude(singaporeLatitude);
-          setLongitude(singaporeLongitude);
+          setEnableLocationVisible(true);
         }
-      },
-      (error: any) => {
-        console.log('error = ', error);
+      } catch (e) {
+        console.log('error = ', e);
         setEnableLocationVisible(true);
-      },
-    );
+      }
+    })();
   };
 
   const getThemeData = async () => {
