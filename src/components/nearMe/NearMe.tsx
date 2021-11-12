@@ -8,7 +8,7 @@ import * as Location from 'expo-location';
 
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
-import { getAsyncStorageData } from '../../common/common';
+import { getAsyncStorageData } from '../../helpers/helpers';
 
 const styles = StyleSheet.create({
   container: {

@@ -17,7 +17,7 @@ import moment from 'moment';
 
 import { gql, useLazyQuery } from '@apollo/client';
 
-import { getAsyncStorageData } from '../../common/common';
+import { getAsyncStorageData } from '../../helpers/helpers';
 
 const styles = StyleSheet.create({
   container: {
