@@ -3,7 +3,7 @@ import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'r
 import { Button, Portal, Paragraph, Dialog, Snackbar } from 'react-native-paper';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 
-import { storeDataToAsyncStorage, getAsyncStorageData } from '../../common/common';
+import { storeDataToAsyncStorage, getAsyncStorageData } from '../../helpers/helpers';
 
 const styles = StyleSheet.create({
   container: {
