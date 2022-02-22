@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.3](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.2...v0.3.3) (2022-02-22)
+
+
+### Features
+
+* 🎸 add expo-updates lib ([fac9896](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/fac9896b4565d3788a6babfd65eb70638c820add))
+* 🎸 add semgrep.yml ([eef476b](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/eef476b6a23801d431fc4ff68a8778291ef7a9dc))
+
+
+### Bug Fixes
+
+* 🐛 add eas.json and update readme.md ([a9b2d4c](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/a9b2d4c832704f8f6b194586ad548ef9f3a98ce3))
+* 🐛 fix lat long ([c22952e](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/c22952ee3fd527272636dfe7d714e2a17e763a6b))
+* 🐛 update lib version ([e73f6e6](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/e73f6e6aedf63487a1084308e2b8d2e93cb00976))
+
 ### [0.3.2](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.1...v0.3.2) (2021-11-12)
 
 
