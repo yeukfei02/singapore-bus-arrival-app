@@ -3,7 +3,6 @@ import { StyleSheet, Text, ScrollView, View, RefreshControl, Platform, Touchable
 import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
-import _ from 'lodash';
 import * as Location from 'expo-location';
 
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
@@ -134,17 +133,13 @@ function NearMe(props: any): JSX.Element {
           const location = await Location.getCurrentPositionAsync({});
           console.log('latitude = ', location.coords.latitude);
           console.log('longitude = ', location.coords.longitude);
-          if (
-            _.inRange(location.coords.latitude, singaporeLatitude - 0.05, singaporeLatitude + 0.05) &&
-            _.inRange(location.coords.longitude, singaporeLongitude - 0.05, singaporeLongitude + 0.05)
-          ) {
-            setLatitude(location.coords.latitude);
-            setLongitude(location.coords.longitude);
-          } else {
-            setLatitude(singaporeLatitude);
-            setLongitude(singaporeLongitude);
-          }
+
+          setLatitude(location.coords.latitude);
+          setLongitude(location.coords.longitude);
         } else {
+          setLatitude(singaporeLatitude);
+          setLongitude(singaporeLongitude);
+
           setEnableLocationVisible(true);
         }
       } catch (e) {
