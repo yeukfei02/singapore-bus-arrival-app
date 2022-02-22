@@ -49,6 +49,10 @@ function Settings(props: any): JSX.Element {
     setChangeThemeValue('dark');
   };
 
+  const handleWebClick = () => {
+    Linking.openURL(`https://singapore-bus-arrival-web.vercel.app/`);
+  };
+
   const handleConfirmButtonClick = () => {
     setVisible(false);
 
@@ -104,6 +108,24 @@ function Settings(props: any): JSX.Element {
           <TouchableOpacity onPress={() => handleDarkThemeClick()}>
             <View style={{ backgroundColor: 'gray', padding: 15, borderRadius: 5 }}>
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>DARK THEME</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ marginVertical: 20 }}></View>
+
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: theme === 'light' ? 'black' : 'white' }}>
+          Singapore Bus Arrival Web
+        </Text>
+
+        <View style={{ marginVertical: 20 }}></View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <TouchableOpacity onPress={() => handleWebClick()}>
+            <View
+              style={{ backgroundColor: 'lightcoral', paddingHorizontal: 35, paddingVertical: 15, borderRadius: 5 }}
+            >
+              <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>Web</Text>
             </View>
           </TouchableOpacity>
         </View>
