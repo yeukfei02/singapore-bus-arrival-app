@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.4](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.3...v0.3.4) (2022-02-23)
+
+
+### Features
+
+* 🎸 add web button ([73516ad](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/73516ad551ec9ebfc080f2177755bba7085c82c3))
+
+
+### Bug Fixes
+
+* 🐛 add UIRequiredDeviceCapabilities key for ios ([fec68b2](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/fec68b2e43642dc3a7eeafffe1005e07934a47b3))
+
 ### [0.3.3](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.2...v0.3.3) (2022-02-22)
 
 
