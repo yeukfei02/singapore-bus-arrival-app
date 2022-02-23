@@ -23,7 +23,7 @@
         "NSLocationAlwaysUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
         "NSLocationUsageDescription": "Singapore Bus Arrival App requires your location so that we can find related bus arrival information for you",
-        "UIRequiredDeviceCapabilities": "armv7"
+        "UIRequiredDeviceCapabilities": ["armv7", "arm64"]
       }
     },
     "android": {
