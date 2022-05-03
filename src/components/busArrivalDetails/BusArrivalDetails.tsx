@@ -126,7 +126,9 @@ function BusArrivalDetails(props: any): JSX.Element {
 
   const handleBusNumberClick = (busNumber: string) => {
     if (busNumber) {
-      console.log('busNumber = ', busNumber);
+      props.navigation.navigate(`BusServiceRoutes`, {
+        busServiceNo: busNumber,
+      });
     }
   };
 
