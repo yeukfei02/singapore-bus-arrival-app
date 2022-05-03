@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.6](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.5...v0.3.6) (2022-05-03)
+
+
+### Features
+
+* 🎸 add busServiceRoutes page ([6d05aa1](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/6d05aa10a13b6c7f20626fb60819cf0211381b58))
+
+
+### Bug Fixes
+
+* 🐛 remove map view ([65eab98](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/65eab98f2fdb7f66661c4afc739db229e80dc59a))
+* 🐛 update version in app.json ([289e5d3](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/289e5d3e273ea48f374bbecc7e50d25e89e8f53a))
+
 ### [0.3.5](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.4...v0.3.5) (2022-02-23)
 
 
