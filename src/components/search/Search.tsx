@@ -13,6 +13,7 @@ import {
 import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
+import CustomRadioButton from '../customRadioButton/CustomRadioButton';
 
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
@@ -58,6 +59,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 5,
   },
+  busServiceResultServiceNoText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+    marginVertical: 5,
+  },
 });
 
 const GET_BUS_STOP_BY_ROAD_NAME = gql`
@@ -96,6 +103,24 @@ const GET_BUS_STOP_BY_BUS_STOP_CODE = gql`
   }
 `;
 
+const GET_ALL_BUS_SERVICE = gql`
+  query allBusService($busServiceNo: String) {
+    allBusService(busServiceNo: $busServiceNo) {
+      serviceNo
+      operator
+      direction
+      category
+      originCode
+      destinationCode
+      amPeakFreq
+      amOffpeakFreq
+      pmPeakFreq
+      pmOffpeakFreq
+      loopDesc
+    }
+  }
+`;
+
 const ADD_FAVOURITES = gql`
   mutation addFavourites($data: AddFavourites!) {
     addFavourites(data: $data) {
@@ -105,9 +130,13 @@ const ADD_FAVOURITES = gql`
 `;
 
 function Search(props: any): JSX.Element {
+  const [searchByRoadNamePlaceBusStopCodeChecked, setSearchByRoadNamePlaceBusStopCodeChecked] = useState(true);
+  const [searchByBusServiceChecked, setSearchByBusServiceChecked] = useState(false);
+
   const [roadName, setRoadName] = useState('');
   const [placeName, setPlaceName] = useState('');
   const [busStopCode, setBusStopCode] = useState('');
+  const [busService, setBusService] = useState('');
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -116,6 +145,7 @@ function Search(props: any): JSX.Element {
   const [recordData, setRecordData] = useState<any>(null);
   const [record2Data, setRecord2Data] = useState<any>(null);
   const [record3Data, setRecord3Data] = useState<any>(null);
+  const [record4Data, setRecord4Data] = useState<any>(null);
 
   const [visible, setVisible] = useState(false);
 
@@ -124,6 +154,7 @@ function Search(props: any): JSX.Element {
   const [getBusStopByRoadName, getBusStopByRoadNameResult] = useLazyQuery(GET_BUS_STOP_BY_ROAD_NAME);
   const [getBusStopByDescription, getBusStopByDescriptionResult] = useLazyQuery(GET_BUS_STOP_BY_DESCRIPTION);
   const [getBusStopByBusStopCode, getBusStopByBusStopCodeResult] = useLazyQuery(GET_BUS_STOP_BY_BUS_STOP_CODE);
+  const [getAllBusService, getAllBusServiceResult] = useLazyQuery(GET_ALL_BUS_SERVICE);
 
   const [addFavourites, addFavouritesResult] = useMutation(ADD_FAVOURITES);
 
@@ -138,6 +169,10 @@ function Search(props: any): JSX.Element {
   console.log('getBusStopByBusStopCodeResult loading = ', getBusStopByBusStopCodeResult.loading);
   console.log('getBusStopByBusStopCodeResult error = ', getBusStopByBusStopCodeResult.error);
   console.log('getBusStopByBusStopCodeResult data = ', getBusStopByBusStopCodeResult.data);
+
+  console.log('getAllBusServiceResult loading = ', getAllBusServiceResult.loading);
+  console.log('getAllBusServiceResult error = ', getAllBusServiceResult.error);
+  console.log('getAllBusServiceResult data = ', getAllBusServiceResult.data);
 
   console.log('addFavouritesResult.data = ', addFavouritesResult.data);
 
@@ -167,6 +202,18 @@ function Search(props: any): JSX.Element {
   }, [busStopCode]);
 
   useEffect(() => {
+    if (busService) {
+      getAllBusService({ variables: { busServiceNo: busService } });
+    }
+  }, [busService]);
+
+  useEffect(() => {
+    if (searchByBusServiceChecked) {
+      getAllBusService({ variables: { busServiceNo: '' } });
+    }
+  }, [searchByBusServiceChecked]);
+
+  useEffect(() => {
     if (getBusStopByRoadNameResult.data) {
       setRecordData(getBusStopByRoadNameResult.data);
     }
@@ -183,6 +230,12 @@ function Search(props: any): JSX.Element {
       setRecord3Data(getBusStopByBusStopCodeResult.data);
     }
   }, [getBusStopByBusStopCodeResult.data]);
+
+  useEffect(() => {
+    if (getAllBusServiceResult.data) {
+      setRecord4Data(getAllBusServiceResult.data);
+    }
+  }, [getAllBusServiceResult.data]);
 
   const getThemeData = async () => {
     const theme = await getAsyncStorageData('@theme');
@@ -213,6 +266,10 @@ function Search(props: any): JSX.Element {
     setRecord3Data(null);
 
     setBusStopCode(text);
+  };
+
+  const handleBusServiceChange = (text: string) => {
+    setBusService(text);
   };
 
   const renderBusStopResultDiv = () => {
@@ -375,6 +432,50 @@ function Search(props: any): JSX.Element {
     return busStopResultDiv;
   };
 
+  const renderBusServicesResultDiv = () => {
+    let busServiceResultDiv = (
+      <View style={styles.noDataContainer}>
+        <Text>There is no data</Text>
+      </View>
+    );
+
+    if (getAllBusServiceResult.loading) {
+      busServiceResultDiv = (
+        <View style={styles.loadingContainer}>
+          <Text>Loading...</Text>
+        </View>
+      );
+    } else {
+      if (getAllBusServiceResult.error) {
+        busServiceResultDiv = (
+          <View style={styles.errorContainer}>
+            <Text>There is error</Text>
+          </View>
+        );
+      } else {
+        if (record4Data) {
+          busServiceResultDiv = record4Data.allBusService.map((item: any, i: number) => {
+            return (
+              <TouchableOpacity key={i} onPress={() => handleBusServiceClick(item.serviceNo)}>
+                <View key={i} style={styles.busStopResultContainer}>
+                  <Text style={styles.busServiceResultServiceNoText}>{item.serviceNo}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          });
+        }
+      }
+    }
+
+    return busServiceResultDiv;
+  };
+
+  const handleBusServiceClick = (busServiceNo: string) => {
+    props.navigation.navigate(`BusServiceRoutes`, {
+      busServiceNo: busServiceNo,
+    });
+  };
+
   const handleFavouriteIconClick = (item: any) => {
     setVisible(true);
     setItem(item);
@@ -404,9 +505,14 @@ function Search(props: any): JSX.Element {
     setRefreshing(true);
 
     getThemeData();
+
+    setSearchByRoadNamePlaceBusStopCodeChecked(false);
+    setSearchByBusServiceChecked(false);
+
     setRoadName('');
     setPlaceName('');
     setBusStopCode('');
+    setBusService('');
 
     setRecordData(null);
     setRecord2Data(null);
@@ -449,6 +555,123 @@ function Search(props: any): JSX.Element {
     setVisible(false);
   };
 
+  const handleSearchByRoadNamePlaceBusStopCodeRadioButtonClick = () => {
+    setSearchByRoadNamePlaceBusStopCodeChecked(true);
+    setSearchByBusServiceChecked(false);
+  };
+
+  const handleSearchByBusServiceRadioButtonClick = () => {
+    setSearchByRoadNamePlaceBusStopCodeChecked(false);
+    setSearchByBusServiceChecked(true);
+  };
+
+  const renderResultView = () => {
+    let resultView = null;
+
+    if (searchByRoadNamePlaceBusStopCodeChecked) {
+      resultView = (
+        <View>
+          <TextInput
+            style={{
+              height: 60,
+              padding: 10,
+              backgroundColor: 'gainsboro',
+              borderColor: 'black',
+              borderWidth: 1,
+              borderRadius: 5,
+              opacity: 0.7,
+            }}
+            placeholder="Road Name"
+            placeholderTextColor="black"
+            onChangeText={(text) => handleRoadNameChange(text)}
+            value={roadName}
+          />
+
+          <View style={{ marginVertical: 10 }}></View>
+
+          <TextInput
+            style={{
+              height: 60,
+              padding: 10,
+              backgroundColor: 'gainsboro',
+              borderColor: 'black',
+              borderWidth: 1,
+              borderRadius: 5,
+              opacity: 0.7,
+            }}
+            placeholder="Place"
+            placeholderTextColor="black"
+            onChangeText={(text) => handlePlaceNameChange(text)}
+            value={placeName}
+          />
+
+          <View style={{ marginVertical: 10 }}></View>
+
+          <TextInput
+            style={{
+              height: 60,
+              padding: 10,
+              backgroundColor: 'gainsboro',
+              borderColor: 'black',
+              borderWidth: 1,
+              borderRadius: 5,
+              opacity: 0.7,
+            }}
+            placeholder="Bus Stop Code"
+            placeholderTextColor="black"
+            onChangeText={(text) => handleBusStopCodeChange(text)}
+            value={busStopCode}
+          />
+
+          <View style={{ marginVertical: 10 }}></View>
+
+          {renderBusStopResultDiv()}
+
+          <Portal>
+            <Dialog visible={visible}>
+              <Dialog.Title>Add favourites</Dialog.Title>
+              <Dialog.Content>
+                <Paragraph>Are you sure want to add to favourites?</Paragraph>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button color="#1197d5" onPress={handleCancalButtonClick}>
+                  Cancel
+                </Button>
+                <Button onPress={handleConfirmButtonClick}>Confirm</Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+        </View>
+      );
+    } else if (searchByBusServiceChecked) {
+      resultView = (
+        <View>
+          <TextInput
+            style={{
+              height: 60,
+              padding: 10,
+              backgroundColor: 'gainsboro',
+              borderColor: 'black',
+              borderWidth: 1,
+              borderRadius: 5,
+              opacity: 0.7,
+            }}
+            placeholder="Bus Service"
+            placeholderTextColor="black"
+            onChangeText={(text) => handleBusServiceChange(text)}
+            value={busService}
+          />
+
+          <View style={{ marginVertical: 10 }}></View>
+
+          {renderBusServicesResultDiv()}
+        </View>
+      );
+    }
+
+    return resultView;
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: theme === 'light' ? 'white' : 'black' }}
@@ -462,76 +685,20 @@ function Search(props: any): JSX.Element {
 
         <View style={{ marginVertical: 10 }}></View>
 
-        <TextInput
-          style={{
-            height: 60,
-            padding: 10,
-            backgroundColor: 'gainsboro',
-            borderColor: 'black',
-            borderWidth: 1,
-            borderRadius: 5,
-            opacity: 0.7,
-          }}
-          placeholder="Road Name"
-          placeholderTextColor="black"
-          onChangeText={(text) => handleRoadNameChange(text)}
-          value={roadName}
-        />
+        <View>
+          <TouchableOpacity onPress={() => handleSearchByRoadNamePlaceBusStopCodeRadioButtonClick()}>
+            <CustomRadioButton
+              text={'Search By Road Name, Place, Bus Stop Code'}
+              checked={searchByRoadNamePlaceBusStopCodeChecked}
+              theme={theme}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleSearchByBusServiceRadioButtonClick()}>
+            <CustomRadioButton text={'Search By Bus Service'} checked={searchByBusServiceChecked} theme={theme} />
+          </TouchableOpacity>
+        </View>
 
-        <View style={{ marginVertical: 10 }}></View>
-
-        <TextInput
-          style={{
-            height: 60,
-            padding: 10,
-            backgroundColor: 'gainsboro',
-            borderColor: 'black',
-            borderWidth: 1,
-            borderRadius: 5,
-            opacity: 0.7,
-          }}
-          placeholder="Place"
-          placeholderTextColor="black"
-          onChangeText={(text) => handlePlaceNameChange(text)}
-          value={placeName}
-        />
-
-        <View style={{ marginVertical: 10 }}></View>
-
-        <TextInput
-          style={{
-            height: 60,
-            padding: 10,
-            backgroundColor: 'gainsboro',
-            borderColor: 'black',
-            borderWidth: 1,
-            borderRadius: 5,
-            opacity: 0.7,
-          }}
-          placeholder="Bus Stop Code"
-          placeholderTextColor="black"
-          onChangeText={(text) => handleBusStopCodeChange(text)}
-          value={busStopCode}
-        />
-
-        <View style={{ marginVertical: 10 }}></View>
-
-        {renderBusStopResultDiv()}
-
-        <Portal>
-          <Dialog visible={visible}>
-            <Dialog.Title>Add favourites</Dialog.Title>
-            <Dialog.Content>
-              <Paragraph>Are you sure want to add to favourites?</Paragraph>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button color="#1197d5" onPress={handleCancalButtonClick}>
-                Cancel
-              </Button>
-              <Button onPress={handleConfirmButtonClick}>Confirm</Button>
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
+        {renderResultView()}
       </View>
     </ScrollView>
   );
