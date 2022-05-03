@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.5](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.4...v0.3.5) (2022-02-23)
+
+
+### Bug Fixes
+
+* 🐛 fix UIRequiredDeviceCapabilities ([05dcdd2](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/05dcdd21c196b2f508a96162a40350f76b751161))
+* 🐛 update version ([b750249](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/b75024991dfe40c2f2a67c470e02e42746054b72))
+
+### [0.3.4](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.3...v0.3.4) (2022-02-23)
+
+
+### Features
+
+* 🎸 add web button ([73516ad](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/73516ad551ec9ebfc080f2177755bba7085c82c3))
+
+
+### Bug Fixes
+
+* 🐛 add UIRequiredDeviceCapabilities key for ios ([fec68b2](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/fec68b2e43642dc3a7eeafffe1005e07934a47b3))
+
+### [0.3.3](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.2...v0.3.3) (2022-02-22)
+
+
+### Features
+
+* 🎸 add expo-updates lib ([fac9896](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/fac9896b4565d3788a6babfd65eb70638c820add))
+* 🎸 add semgrep.yml ([eef476b](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/eef476b6a23801d431fc4ff68a8778291ef7a9dc))
+
+
+### Bug Fixes
+
+* 🐛 add eas.json and update readme.md ([a9b2d4c](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/a9b2d4c832704f8f6b194586ad548ef9f3a98ce3))
+* 🐛 fix lat long ([c22952e](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/c22952ee3fd527272636dfe7d714e2a17e763a6b))
+* 🐛 update lib version ([e73f6e6](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/e73f6e6aedf63487a1084308e2b8d2e93cb00976))
+
+### [0.3.2](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.1...v0.3.2) (2021-11-12)
+
+
+### Bug Fixes
+
+* 🐛 update readme.md and change to helpers ([b01af5e](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/b01af5e3af9db1a280410d5323f4cdcf22da72d1))
+
 ### [0.3.1](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.0...v0.3.1) (2021-10-25)
 
 
