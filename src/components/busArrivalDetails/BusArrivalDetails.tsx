@@ -202,7 +202,7 @@ function BusArrivalDetails(props: any): JSX.Element {
               <View key={i} style={styles.busArrivalResultContainer}>
                 <View style={styles.busArrivalResultHeaderContainer}>
                   <Text
-                    style={{ fontSize: 20, fontWeight: 'bold', textDecorationLine: 'underline' }}
+                    style={{ fontSize: 22, fontWeight: 'bold', textDecorationLine: 'underline' }}
                     onPress={() => handleBusNumberClick(item.busNumber)}
                   >
                     {item.busNumber}

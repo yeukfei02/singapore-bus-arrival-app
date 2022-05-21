@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   busStopByLatLongResultDescriptionText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     marginVertical: 5,
   },
   busStopByLatLongResultRoadNameText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     marginVertical: 5,
   },
@@ -184,14 +184,14 @@ function NearMe(props: any): JSX.Element {
                 <Text style={styles.busStopByLatLongResultDescriptionText}>{item.description}</Text>
                 <Text style={styles.busStopByLatLongResultRoadNameText}>{item.roadName}</Text>
 
-                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                  <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
-                  <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
-                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
-                      {item.busStopCode}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  style={{ marginVertical: 5 }}
+                  onPress={() => handleBusStopCodeClick(item.busStopCode)}
+                >
+                  <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                    {item.busStopCode}
+                  </Text>
+                </TouchableOpacity>
 
                 <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
                   <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
