@@ -165,23 +165,31 @@ function BusServiceRoutes(props: any): JSX.Element {
       } else {
         if (responseData && responseData.busRouteByBusServiceNo) {
           const groupedBusRouteByBusServiceNo = _.groupBy(responseData.busRouteByBusServiceNo, 'direction');
+          const inboundList = groupedBusRouteByBusServiceNo['1'];
+          const outboundList = groupedBusRouteByBusServiceNo['2'];
+
+          let inboundFrom = '';
+          let inboundTo = '';
+          if (inboundList) {
+            inboundFrom = inboundList[0].busStop.description;
+            inboundTo = inboundList[inboundList.length - 1].busStop.description;
+          }
+
+          let outboundFrom = '';
+          let outboundTo = '';
+          if (outboundList) {
+            outboundFrom = outboundList[0].busStop.description;
+            outboundTo = outboundList[outboundList.length - 1].busStop.description;
+          }
 
           busServiceRoutesResultDiv = (
             <View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color="tomato" />
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: theme === 'light' ? 'black' : 'white',
-                    marginLeft: 8,
-                  }}
-                >
-                  {isSwitchOn ? `Inbound` : `Outbound`}
-                </Text>
+                {renderSwitchText(isSwitchOn, inboundFrom, inboundTo, outboundFrom, outboundTo)}
               </View>
 
-              {renderBusServiceRoutesList(isSwitchOn, groupedBusRouteByBusServiceNo)}
+              {renderBusServiceRoutesList(isSwitchOn, inboundList, outboundList)}
             </View>
           );
         }
@@ -191,26 +199,60 @@ function BusServiceRoutes(props: any): JSX.Element {
     return busServiceRoutesResultDiv;
   };
 
-  const renderBusServiceRoutesList = (isSwitchOn: boolean, groupedBusRouteByBusServiceNo: any) => {
+  const renderSwitchText = (
+    isSwitchOn: boolean,
+    inboundFrom: string,
+    inboundTo: string,
+    outboundFrom: string,
+    outboundTo: string,
+  ) => {
+    let switchText = null;
+
+    if (isSwitchOn) {
+      if (inboundFrom && inboundTo) {
+        switchText = (
+          <Text
+            style={{
+              fontSize: 15,
+              color: theme === 'light' ? 'black' : 'white',
+              marginLeft: 8,
+            }}
+          >
+            {`From ${inboundFrom} to ${inboundTo}`}
+          </Text>
+        );
+      }
+    } else {
+      if (outboundFrom && outboundTo) {
+        switchText = (
+          <Text
+            style={{
+              fontSize: 15,
+              color: theme === 'light' ? 'black' : 'white',
+              marginLeft: 8,
+            }}
+          >
+            {`From ${outboundFrom} to ${outboundTo}`}
+          </Text>
+        );
+      }
+    }
+
+    return switchText;
+  };
+
+  const renderBusServiceRoutesList = (isSwitchOn: boolean, inboundList: any[], outboundList: any[]) => {
     let busServiceRoutesList = null;
 
     if (isSwitchOn) {
-      const inboundList = groupedBusRouteByBusServiceNo['1'];
       if (inboundList) {
         busServiceRoutesList = inboundList.map((item: any, i: number) => {
           if (item.busStop) {
             return (
               <View key={i} style={styles.busServiceRoutesContainer}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 6 }}>
-                  Bus Stop Code: {item.busStop.busStopCode}
-                </Text>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 6 }}>
-                  Road Name: {item.busStop.roadName}
-                </Text>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 6 }}>
-                  Description: {item.busStop.description}
-                </Text>
+                {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 6 }}>{item.busStop.description}</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 6 }}>{item.busStop.busStopCode}</Text>
                 <TouchableOpacity
                   onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
                 >
@@ -224,22 +266,14 @@ function BusServiceRoutes(props: any): JSX.Element {
         });
       }
     } else {
-      const outboundList = groupedBusRouteByBusServiceNo['2'];
       if (outboundList) {
         busServiceRoutesList = outboundList.map((item: any, i: number) => {
           if (item.busStop) {
             return (
               <View key={i} style={styles.busServiceRoutesContainer}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 6 }}>
-                  Bus Stop Code: {item.busStop.busStopCode}
-                </Text>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 6 }}>
-                  Road Name: {item.busStop.roadName}
-                </Text>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 6 }}>
-                  Description: {item.busStop.description}
-                </Text>
+                {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                <Text style={{ fontSize: 22, fontWeight: 'bold', marginVertical: 6 }}>{item.busStop.description}</Text>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 6 }}>{item.busStop.busStopCode}</Text>
                 <TouchableOpacity
                   onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
                 >

@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   favouritesResultDescriptionText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     marginVertical: 5,
   },
   favouritesResultRoadNameText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     marginVertical: 5,
   },
@@ -180,14 +180,14 @@ function Favourites(props: any): JSX.Element {
                   <Text style={styles.favouritesResultDescriptionText}>{item.description}</Text>
                   <Text style={styles.favouritesResultRoadNameText}>{item.road_name}</Text>
 
-                  <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                    <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
-                    <TouchableOpacity onPress={() => handleBusStopCodeClick(item.bus_stop_code)}>
-                      <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
-                        {item.bus_stop_code}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                  <TouchableOpacity
+                    style={{ marginVertical: 5 }}
+                    onPress={() => handleBusStopCodeClick(item.bus_stop_code)}
+                  >
+                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                      {item.bus_stop_code}
+                    </Text>
+                  </TouchableOpacity>
 
                   <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
                     <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>

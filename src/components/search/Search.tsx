@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   busStopResultDescriptionText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
     marginVertical: 5,
   },
   busStopResultRoadNameText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     marginVertical: 5,
   },
@@ -301,14 +301,14 @@ function Search(props: any): JSX.Element {
                   <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
                   <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
-                  <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                    <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
-                    <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
-                      <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
-                        {item.busStopCode}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                  <TouchableOpacity
+                    style={{ marginVertical: 5 }}
+                    onPress={() => handleBusStopCodeClick(item.busStopCode)}
+                  >
+                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                      {item.busStopCode}
+                    </Text>
+                  </TouchableOpacity>
 
                   <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
                     <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
@@ -351,14 +351,14 @@ function Search(props: any): JSX.Element {
                   <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
                   <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
-                  <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                    <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
-                    <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
-                      <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
-                        {item.busStopCode}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                  <TouchableOpacity
+                    style={{ marginVertical: 5 }}
+                    onPress={() => handleBusStopCodeClick(item.busStopCode)}
+                  >
+                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                      {item.busStopCode}
+                    </Text>
+                  </TouchableOpacity>
 
                   <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
                     <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
@@ -401,14 +401,14 @@ function Search(props: any): JSX.Element {
                   <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
                   <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
-                  <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                    <Text style={{ fontSize: 22 }}>Bus Stop Code: </Text>
-                    <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStopCode)}>
-                      <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
-                        {item.busStopCode}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                  <TouchableOpacity
+                    style={{ marginVertical: 5 }}
+                    onPress={() => handleBusStopCodeClick(item.busStopCode)}
+                  >
+                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                      {item.busStopCode}
+                    </Text>
+                  </TouchableOpacity>
 
                   <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
                     <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
