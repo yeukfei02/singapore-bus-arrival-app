@@ -280,8 +280,8 @@ function BusServiceRoutes(props: any): JSX.Element {
 
           if (item.busStop) {
             if (
-              _.inRange(latitude, item.busStop.latitude - 0.003, item.busStop.latitude + 0.003) &&
-              _.inRange(longitude, item.busStop.longitude - 0.003, item.busStop.longitude + 0.003)
+              _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
+              _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
             ) {
               view = (
                 <View key={i} style={styles.busServiceRoutesContainer}>
@@ -333,8 +333,8 @@ function BusServiceRoutes(props: any): JSX.Element {
 
           if (item.busStop) {
             if (
-              _.inRange(latitude, item.busStop.latitude - 0.003, item.busStop.latitude + 0.003) &&
-              _.inRange(longitude, item.busStop.longitude - 0.003, item.busStop.longitude + 0.003)
+              _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
+              _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
             ) {
               view = (
                 <View key={i} style={styles.busServiceRoutesContainer}>
