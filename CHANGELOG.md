@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.7](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.6...v0.3.7) (2022-06-17)
+
+
+### Features
+
+* 🎸 add format command ([dafc646](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/dafc6460330d52e68488d092d56f80c0f1688192))
+* 🎸 add highlight color and fix fontsize in BusServiceRoute ([c7a9e7a](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/c7a9e7ab6844e56700cb8fa45d6d2adfd24185f4))
+
+
+### Bug Fixes
+
+* 🐛 fix lat long ([5424856](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/5424856a53576388ecbc0d6eb95cd2773ec7caec))
+* 🐛 update expo version ([af878ae](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/af878aef4a58c0fb80095fc9c081d98f07245094))
+* 🐛 update font size and text value ([164b2bc](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/164b2bc28635483099351794e1a56d730b476872))
+
 ### [0.3.6](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.5...v0.3.6) (2022-05-03)
 
 
