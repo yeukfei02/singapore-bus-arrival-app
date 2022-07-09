@@ -96,13 +96,13 @@ function BusServiceRoutes(props: any): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (route.params) {
+    if (!responseData && route.params) {
       const busServiceNo = (route.params as any).busServiceNo;
       getBusRouteByBusServiceNo({
         variables: { busServiceNo: busServiceNo },
       });
     }
-  }, [route.params]);
+  }, [responseData, route.params]);
 
   useEffect(() => {
     if (data) {
@@ -130,7 +130,7 @@ function BusServiceRoutes(props: any): JSX.Element {
       });
     }
 
-    if (!loading) {
+    if (data) {
       setRefreshing(false);
     }
   };

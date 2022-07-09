@@ -248,6 +248,7 @@ function Search(props: any): JSX.Element {
     setRecordData(null);
     setRecord2Data(null);
     setRecord3Data(null);
+    setRecord4Data(null);
 
     setRoadName(text);
   };
@@ -256,6 +257,7 @@ function Search(props: any): JSX.Element {
     setRecordData(null);
     setRecord2Data(null);
     setRecord3Data(null);
+    setRecord4Data(null);
 
     setPlaceName(text);
   };
@@ -264,6 +266,7 @@ function Search(props: any): JSX.Element {
     setRecordData(null);
     setRecord2Data(null);
     setRecord3Data(null);
+    setRecord4Data(null);
 
     setBusStopCode(text);
   };
@@ -517,11 +520,13 @@ function Search(props: any): JSX.Element {
     setRecordData(null);
     setRecord2Data(null);
     setRecord3Data(null);
+    setRecord4Data(null);
 
     if (
-      !getBusStopByRoadNameResult.loading &&
-      !getBusStopByDescriptionResult.loading &&
-      !getBusStopByBusStopCodeResult.loading
+      !getBusStopByRoadNameResult.loading ||
+      !getBusStopByDescriptionResult.loading ||
+      !getBusStopByBusStopCodeResult.loading ||
+      !getAllBusServiceResult.loading
     ) {
       setRefreshing(false);
     }

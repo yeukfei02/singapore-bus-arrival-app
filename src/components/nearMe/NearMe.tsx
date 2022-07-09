@@ -266,11 +266,8 @@ function NearMe(props: any): JSX.Element {
     setPageNumber(1);
     client?.clearStore();
     setResponseData(null);
-    // getBusStopByLatLong({
-    //   variables: { latitude: latitude, longitude: longitude, pageNumber: pageNumber },
-    // });
 
-    if (!loading) {
+    if (data) {
       setRefreshing(false);
     }
   };
