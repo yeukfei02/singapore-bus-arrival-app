@@ -107,14 +107,14 @@ function Favourites(props: any): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (Constants.installationId) {
+    if (!responseData && Constants.installationId) {
       getFavouritesByInstallationId({
         variables: {
           installationId: Constants.installationId,
         },
       });
     }
-  }, [Constants.installationId]);
+  }, [responseData, Constants.installationId]);
 
   useEffect(() => {
     if (data) {
@@ -123,16 +123,14 @@ function Favourites(props: any): JSX.Element {
   }, [data]);
 
   useEffect(() => {
-    if (deleteFavouritesResult.data) {
-      if (deleteFavouritesResult.data.deleteFavouritesById.status) {
-        setResponseData(null);
-        deleteFavouritesResult.client.clearStore();
-        getFavouritesByInstallationId({
-          variables: {
-            installationId: Constants.installationId,
-          },
-        });
-      }
+    if (deleteFavouritesResult.data && deleteFavouritesResult.data.deleteFavouritesById.status) {
+      setResponseData(null);
+      deleteFavouritesResult.client.clearStore();
+      getFavouritesByInstallationId({
+        variables: {
+          installationId: Constants.installationId,
+        },
+      });
     }
   }, [deleteFavouritesResult.data]);
 
@@ -164,44 +162,42 @@ function Favourites(props: any): JSX.Element {
           </View>
         );
       } else {
-        if (responseData) {
-          if (responseData.getFavouritesByInstallationId) {
-            favouritesListDiv = responseData.getFavouritesByInstallationId.map((element: any, i: number) => {
-              const item = element.item;
+        if (responseData && responseData.getFavouritesByInstallationId) {
+          favouritesListDiv = responseData.getFavouritesByInstallationId.map((element: any, i: number) => {
+            const item = element.item;
 
-              return (
-                <View key={i} style={styles.favouritesResultContainer}>
-                  <View style={{ alignSelf: 'flex-end' }}>
-                    <TouchableOpacity onPress={() => handleDeleteButtonClick(element.id)}>
-                      <MaterialIcons name="delete" size={30} color="black" />
-                    </TouchableOpacity>
-                  </View>
-
-                  <Text style={styles.favouritesResultDescriptionText}>{item.description}</Text>
-                  <Text style={styles.favouritesResultRoadNameText}>{item.road_name}</Text>
-
-                  <TouchableOpacity
-                    style={{ marginVertical: 5 }}
-                    onPress={() => handleBusStopCodeClick(item.bus_stop_code)}
-                  >
-                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
-                      {item.bus_stop_code}
-                    </Text>
+            return (
+              <View key={i} style={styles.favouritesResultContainer}>
+                <View style={{ alignSelf: 'flex-end' }}>
+                  <TouchableOpacity onPress={() => handleDeleteButtonClick(element.id)}>
+                    <MaterialIcons name="delete" size={30} color="black" />
                   </TouchableOpacity>
-
-                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
-                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
-                    <MaterialIcons name="favorite" size={30} color="tomato" />
-                  </View>
                 </View>
-              );
-            });
-          }
+
+                <Text style={styles.favouritesResultDescriptionText}>{item.description}</Text>
+                <Text style={styles.favouritesResultRoadNameText}>{item.road_name}</Text>
+
+                <TouchableOpacity
+                  style={{ marginVertical: 5 }}
+                  onPress={() => handleBusStopCodeClick(item.bus_stop_code)}
+                >
+                  <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                    {item.bus_stop_code}
+                  </Text>
+                </TouchableOpacity>
+
+                <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                  <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                    <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                  <MaterialIcons name="favorite" size={30} color="tomato" />
+                </View>
+              </View>
+            );
+          });
         }
       }
     }
@@ -247,7 +243,7 @@ function Favourites(props: any): JSX.Element {
       },
     });
 
-    if (!loading) {
+    if (data) {
       setRefreshing(false);
     }
   };

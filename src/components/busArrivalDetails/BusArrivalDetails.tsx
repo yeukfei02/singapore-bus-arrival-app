@@ -99,13 +99,13 @@ function BusArrivalDetails(props: any): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (route.params) {
+    if (!responseData && route.params) {
       const busStopCode = (route.params as any).busStopCode;
       getBusArrival({
         variables: { busStopCode: busStopCode },
       });
     }
-  }, [route.params]);
+  }, [responseData, route.params]);
 
   useEffect(() => {
     if (data) {
@@ -329,7 +329,7 @@ function BusArrivalDetails(props: any): JSX.Element {
       });
     }
 
-    if (!loading) {
+    if (data) {
       setRefreshing(false);
     }
   };
