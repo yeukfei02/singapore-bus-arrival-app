@@ -300,31 +300,28 @@ function Search(props: any): JSX.Element {
           if (recordData.busStopByRoadName) {
             busStopResultDiv = recordData.busStopByRoadName.map((item: any, i: number) => {
               return (
-                <View key={i} style={styles.busStopResultContainer}>
-                  <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
-                  <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
+                <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                  <View style={styles.busStopResultContainer}>
+                    <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
+                    <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
-                  <TouchableOpacity
-                    style={{ marginVertical: 5 }}
-                    onPress={() => handleBusStopCodeClick(item.busStopCode)}
-                  >
-                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                    <Text style={{ marginVertical: 5, fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
                       {item.busStopCode}
                     </Text>
-                  </TouchableOpacity>
 
-                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
-                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
-                    </TouchableOpacity>
-                  </View>
+                    <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                      <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                        <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
+                      </TouchableOpacity>
+                    </View>
 
-                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
-                    <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
-                      <MaterialIcons name="favorite" size={30} color="tomato" />
-                    </TouchableOpacity>
+                    <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                      <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                        <MaterialIcons name="favorite" size={30} color="tomato" />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             });
           }
@@ -350,31 +347,28 @@ function Search(props: any): JSX.Element {
           if (record2Data.busStopByDescription) {
             busStopResultDiv = record2Data.busStopByDescription.map((item: any, i: number) => {
               return (
-                <View key={i} style={styles.busStopResultContainer}>
-                  <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
-                  <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
+                <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                  <View style={styles.busStopResultContainer}>
+                    <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
+                    <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
-                  <TouchableOpacity
-                    style={{ marginVertical: 5 }}
-                    onPress={() => handleBusStopCodeClick(item.busStopCode)}
-                  >
-                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                    <Text style={{ marginVertical: 5, fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
                       {item.busStopCode}
                     </Text>
-                  </TouchableOpacity>
 
-                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
-                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
-                    </TouchableOpacity>
-                  </View>
+                    <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                      <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                        <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
+                      </TouchableOpacity>
+                    </View>
 
-                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
-                    <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
-                      <MaterialIcons name="favorite" size={30} color="tomato" />
-                    </TouchableOpacity>
+                    <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                      <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                        <MaterialIcons name="favorite" size={30} color="tomato" />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             });
           }
@@ -400,31 +394,28 @@ function Search(props: any): JSX.Element {
           if (record3Data.busStopByBusStopCode) {
             busStopResultDiv = record3Data.busStopByBusStopCode.map((item: any, i: number) => {
               return (
-                <View key={i} style={styles.busStopResultContainer}>
-                  <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
-                  <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
+                <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                  <View style={styles.busStopResultContainer}>
+                    <Text style={styles.busStopResultDescriptionText}>{item.description}</Text>
+                    <Text style={styles.busStopResultRoadNameText}>{item.roadName}</Text>
 
-                  <TouchableOpacity
-                    style={{ marginVertical: 5 }}
-                    onPress={() => handleBusStopCodeClick(item.busStopCode)}
-                  >
-                    <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                    <Text style={{ marginVertical: 5, fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
                       {item.busStopCode}
                     </Text>
-                  </TouchableOpacity>
 
-                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
-                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
-                    </TouchableOpacity>
-                  </View>
+                    <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                      <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                        <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
+                      </TouchableOpacity>
+                    </View>
 
-                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
-                    <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
-                      <MaterialIcons name="favorite" size={30} color="tomato" />
-                    </TouchableOpacity>
+                    <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                      <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                        <MaterialIcons name="favorite" size={30} color="tomato" />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             });
           }

@@ -171,6 +171,12 @@ function BusServiceRoutes(props: any): JSX.Element {
     props.navigation.goBack();
   };
 
+  const handleBusStopCodeClick = (busStopCode: string) => {
+    props.navigation.navigate(`BusArrivalDetails`, {
+      busStopCode: busStopCode,
+    });
+  };
+
   const renderBusServiceRoutesResultDiv = () => {
     let busServiceRoutesResultDiv = (
       <View style={styles.noDataContainer}>
@@ -284,41 +290,55 @@ function BusServiceRoutes(props: any): JSX.Element {
               _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
             ) {
               view = (
-                <View key={i} style={styles.busServiceRoutesContainer}>
-                  {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                  <Text style={{ fontSize: 16, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.description}
-                  </Text>
-                  <Text style={{ fontSize: 14, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.busStopCode}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                  >
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                      Check bus stop in map
+                <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
+                  <View style={styles.busServiceRoutesContainer}>
+                    {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                    <Text style={{ fontSize: 16, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
+                      {item.busStop.description}
                     </Text>
-                  </TouchableOpacity>
-                </View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: 'red',
+                        fontWeight: 'bold',
+                        marginVertical: 6,
+                        textDecorationLine: 'underline',
+                      }}
+                    >
+                      {item.busStop.busStopCode}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
+                    >
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                        Check bus stop in map
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
               );
             } else {
               view = (
-                <View key={i} style={styles.busServiceRoutesContainer}>
-                  {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.description}
-                  </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.busStopCode}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                  >
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                      Check bus stop in map
+                <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
+                  <View style={styles.busServiceRoutesContainer}>
+                    {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 6 }}>
+                      {item.busStop.description}
                     </Text>
-                  </TouchableOpacity>
-                </View>
+                    <Text
+                      style={{ fontSize: 14, fontWeight: 'bold', marginVertical: 6, textDecorationLine: 'underline' }}
+                    >
+                      {item.busStop.busStopCode}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
+                    >
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                        Check bus stop in map
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
               );
             }
 
@@ -337,41 +357,55 @@ function BusServiceRoutes(props: any): JSX.Element {
               _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
             ) {
               view = (
-                <View key={i} style={styles.busServiceRoutesContainer}>
-                  {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                  <Text style={{ fontSize: 16, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.description}
-                  </Text>
-                  <Text style={{ fontSize: 14, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.busStopCode}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                  >
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                      Check bus stop in map
+                <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
+                  <View style={styles.busServiceRoutesContainer}>
+                    {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                    <Text style={{ fontSize: 16, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
+                      {item.busStop.description}
                     </Text>
-                  </TouchableOpacity>
-                </View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: 'red',
+                        fontWeight: 'bold',
+                        marginVertical: 6,
+                        textDecorationLine: 'underline',
+                      }}
+                    >
+                      {item.busStop.busStopCode}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
+                    >
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                        Check bus stop in map
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
               );
             } else {
               view = (
-                <View key={i} style={styles.busServiceRoutesContainer}>
-                  {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.description}
-                  </Text>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', marginVertical: 6 }}>
-                    {item.busStop.busStopCode}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                  >
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                      Check bus stop in map
+                <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
+                  <View style={styles.busServiceRoutesContainer}>
+                    {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 6 }}>
+                      {item.busStop.description}
                     </Text>
-                  </TouchableOpacity>
-                </View>
+                    <Text
+                      style={{ fontSize: 14, fontWeight: 'bold', marginVertical: 6, textDecorationLine: 'underline' }}
+                    >
+                      {item.busStop.busStopCode}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
+                    >
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                        Check bus stop in map
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
               );
             }
 

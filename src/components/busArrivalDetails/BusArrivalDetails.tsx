@@ -96,20 +96,22 @@ function BusArrivalDetails(props: any): JSX.Element {
     props.navigation.addListener('focus', () => {
       getThemeData();
     });
+    setResponseData(null);
   }, []);
 
   useEffect(() => {
-    if (!responseData && route.params) {
+    if (route.params) {
       const busStopCode = (route.params as any).busStopCode;
       getBusArrival({
         variables: { busStopCode: busStopCode },
       });
     }
-  }, [responseData, route.params]);
+  }, [route.params]);
 
   useEffect(() => {
     if (data) {
       setResponseData(data);
+      setRefreshing(false);
     }
   }, [data]);
 
@@ -139,85 +141,77 @@ function BusArrivalDetails(props: any): JSX.Element {
       </View>
     );
 
-    if (loading) {
+    if (error) {
       busArrivalResultDiv = (
-        <View style={styles.loadingContainer}>
-          <Text>Loading...</Text>
+        <View style={styles.errorContainer}>
+          <Text>There is error</Text>
         </View>
       );
     } else {
-      if (error) {
-        busArrivalResultDiv = (
-          <View style={styles.errorContainer}>
-            <Text>There is error</Text>
-          </View>
-        );
-      } else {
-        if (responseData && responseData.busArrival.services) {
-          busArrivalResultDiv = responseData.busArrival.services.map((item: any, i: number) => {
-            const nextBusList = item.nextBus;
+      if (responseData && responseData.busArrival.services) {
+        busArrivalResultDiv = responseData.busArrival.services.map((item: any, i: number) => {
+          const nextBusList = item.nextBus;
 
-            let firstBusTimeDiffStr = 'Arriving';
-            let firstBusTimeDiff = moment(nextBusList[0].estimatedArrival).diff(moment(), 'minutes');
-            if (isNaN(firstBusTimeDiff)) {
-              firstBusTimeDiff = 0;
+          let firstBusTimeDiffStr = 'Arriving';
+          let firstBusTimeDiff = moment(nextBusList[0].estimatedArrival).diff(moment(), 'minutes');
+          if (isNaN(firstBusTimeDiff)) {
+            firstBusTimeDiff = 0;
+          }
+          if (firstBusTimeDiff > 0) {
+            firstBusTimeDiffStr = `${firstBusTimeDiff.toString()} mins`;
+          }
+
+          const nextBusListResultDiv = nextBusList.map((item: any, i: number) => {
+            let timeDiff = moment(item.estimatedArrival).diff(moment(), 'minutes');
+            if (isNaN(timeDiff)) {
+              timeDiff = 0;
             }
-            if (firstBusTimeDiff > 0) {
-              firstBusTimeDiffStr = `${firstBusTimeDiff.toString()} mins`;
-            }
 
-            const nextBusListResultDiv = nextBusList.map((item: any, i: number) => {
-              let timeDiff = moment(item.estimatedArrival).diff(moment(), 'minutes');
-              if (isNaN(timeDiff)) {
-                timeDiff = 0;
-              }
-
-              const absTimeDiff = Math.abs(timeDiff);
-
-              return (
-                <Card key={i} style={{ padding: 15, marginVertical: 10 }}>
-                  <Text style={{ fontSize: 15, fontWeight: 'bold', marginTop: 10 }}>Next {i + 1} Bus</Text>
-
-                  <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-                    <Text style={{ fontSize: 18 }}>Remaining: </Text>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{absTimeDiff} minutes</Text>
-                  </View>
-
-                  <List.Accordion title="Show more">
-                    <View style={{ marginVertical: 5 }}>{renderLoad(item.load)}</View>
-                    <View style={{ marginVertical: 5 }}>{renderFeature(item.feature)}</View>
-                    <View style={{ marginVertical: 5 }}>{renderType(item.type)}</View>
-
-                    <TouchableOpacity onPress={() => handleCheckBusInMap(item.latitude, item.longitude)}>
-                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                        Check bus in map
-                      </Text>
-                    </TouchableOpacity>
-                  </List.Accordion>
-                </Card>
-              );
-            });
+            const absTimeDiff = Math.abs(timeDiff);
 
             return (
-              <View key={i} style={styles.busArrivalResultContainer}>
-                <View style={styles.busArrivalResultHeaderContainer}>
-                  <Text
-                    style={{ fontSize: 22, fontWeight: 'bold', textDecorationLine: 'underline' }}
-                    onPress={() => handleBusNumberClick(item.busNumber)}
-                  >
-                    {item.busNumber}
-                  </Text>
-                  <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{firstBusTimeDiffStr}</Text>
-                </View>
-                <Text style={{ marginVertical: 15 }}>{item.operator}</Text>
+              <Card key={i} style={{ padding: 15, marginVertical: 10 }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', marginTop: 10 }}>Next {i + 1} Bus</Text>
 
-                <List.Accordion title="Show details">
-                  <View>{nextBusListResultDiv}</View>
+                <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+                  <Text style={{ fontSize: 18 }}>Remaining: </Text>
+                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{absTimeDiff} minutes</Text>
+                </View>
+
+                <List.Accordion title="Show more">
+                  <View style={{ marginVertical: 5 }}>{renderLoad(item.load)}</View>
+                  <View style={{ marginVertical: 5 }}>{renderFeature(item.feature)}</View>
+                  <View style={{ marginVertical: 5 }}>{renderType(item.type)}</View>
+
+                  <TouchableOpacity onPress={() => handleCheckBusInMap(item.latitude, item.longitude)}>
+                    <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                      Check bus in map
+                    </Text>
+                  </TouchableOpacity>
                 </List.Accordion>
-              </View>
+              </Card>
             );
           });
-        }
+
+          return (
+            <View key={i} style={styles.busArrivalResultContainer}>
+              <View style={styles.busArrivalResultHeaderContainer}>
+                <Text
+                  style={{ fontSize: 22, fontWeight: 'bold', textDecorationLine: 'underline' }}
+                  onPress={() => handleBusNumberClick(item.busNumber)}
+                >
+                  {item.busNumber}
+                </Text>
+                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{firstBusTimeDiffStr}</Text>
+              </View>
+              <Text style={{ marginVertical: 15 }}>{item.operator}</Text>
+
+              <List.Accordion title="Show details">
+                <View>{nextBusListResultDiv}</View>
+              </List.Accordion>
+            </View>
+          );
+        });
       }
     }
 
@@ -327,10 +321,6 @@ function BusArrivalDetails(props: any): JSX.Element {
       getBusArrival({
         variables: { busStopCode: busStopCode },
       });
-    }
-
-    if (data) {
-      setRefreshing(false);
     }
   };
 

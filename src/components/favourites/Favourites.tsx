@@ -167,35 +167,32 @@ function Favourites(props: any): JSX.Element {
             const item = element.item;
 
             return (
-              <View key={i} style={styles.favouritesResultContainer}>
-                <View style={{ alignSelf: 'flex-end' }}>
-                  <TouchableOpacity onPress={() => handleDeleteButtonClick(element.id)}>
-                    <MaterialIcons name="delete" size={30} color="black" />
-                  </TouchableOpacity>
-                </View>
+              <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.bus_stop_code)}>
+                <View style={styles.favouritesResultContainer}>
+                  <View style={{ alignSelf: 'flex-end' }}>
+                    <TouchableOpacity onPress={() => handleDeleteButtonClick(element.id)}>
+                      <MaterialIcons name="delete" size={30} color="black" />
+                    </TouchableOpacity>
+                  </View>
 
-                <Text style={styles.favouritesResultDescriptionText}>{item.description}</Text>
-                <Text style={styles.favouritesResultRoadNameText}>{item.road_name}</Text>
+                  <Text style={styles.favouritesResultDescriptionText}>{item.description}</Text>
+                  <Text style={styles.favouritesResultRoadNameText}>{item.road_name}</Text>
 
-                <TouchableOpacity
-                  style={{ marginVertical: 5 }}
-                  onPress={() => handleBusStopCodeClick(item.bus_stop_code)}
-                >
-                  <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                  <Text style={{ marginVertical: 5, fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
                     {item.bus_stop_code}
                   </Text>
-                </TouchableOpacity>
 
-                <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                  <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
-                  </TouchableOpacity>
-                </View>
+                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
+                    </TouchableOpacity>
+                  </View>
 
-                <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
-                  <MaterialIcons name="favorite" size={30} color="tomato" />
+                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                    <MaterialIcons name="favorite" size={30} color="tomato" />
+                  </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           });
         }

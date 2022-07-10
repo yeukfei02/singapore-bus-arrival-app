@@ -180,31 +180,28 @@ function NearMe(props: any): JSX.Element {
         if (responseData && responseData.busStopByLatLong) {
           getBusStopByLatLongResultDiv = responseData.busStopByLatLong.map((item: any, i: number) => {
             return (
-              <View key={i} style={styles.busStopByLatLongResultContainer}>
-                <Text style={styles.busStopByLatLongResultDescriptionText}>{item.description}</Text>
-                <Text style={styles.busStopByLatLongResultRoadNameText}>{item.roadName}</Text>
+              <TouchableOpacity key={i} onPress={() => handleBusStopCodeClick(item.busStopCode)}>
+                <View style={styles.busStopByLatLongResultContainer}>
+                  <Text style={styles.busStopByLatLongResultDescriptionText}>{item.description}</Text>
+                  <Text style={styles.busStopByLatLongResultRoadNameText}>{item.roadName}</Text>
 
-                <TouchableOpacity
-                  style={{ marginVertical: 5 }}
-                  onPress={() => handleBusStopCodeClick(item.busStopCode)}
-                >
-                  <Text style={{ fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
+                  <Text style={{ marginVertical: 5, fontSize: 22, color: 'red', textDecorationLine: 'underline' }}>
                     {item.busStopCode}
                   </Text>
-                </TouchableOpacity>
 
-                <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
-                  <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
-                    <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
-                  </TouchableOpacity>
-                </View>
+                  <View style={{ alignSelf: 'flex-start', marginVertical: 10 }}>
+                    <TouchableOpacity onPress={() => handleOpenInMap(item.latitude, item.longitude)}>
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline' }}>Open in map</Text>
+                    </TouchableOpacity>
+                  </View>
 
-                <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
-                  <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
-                    <MaterialIcons name="favorite" size={30} color="tomato" />
-                  </TouchableOpacity>
+                  <View style={{ alignSelf: 'flex-start', marginTop: 5 }}>
+                    <TouchableOpacity onPress={() => handleFavouriteIconClick(item)}>
+                      <MaterialIcons name="favorite" size={30} color="tomato" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           });
         }
