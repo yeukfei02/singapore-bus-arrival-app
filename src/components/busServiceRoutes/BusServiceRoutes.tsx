@@ -298,68 +298,52 @@ function BusServiceRoutes(props: any): JSX.Element {
           let view = null;
 
           if (item.busStop) {
-            if (
-              _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
-              _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
-            ) {
-              view = (
-                <View key={i}>
-                  <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
-                    <View style={styles.busServiceRoutesContainer}>
-                      {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                      <Text style={{ fontSize: 16, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
-                        {item.busStop.description}
+            view = (
+              <View key={i}>
+                <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
+                  <View style={styles.busServiceRoutesContainer}>
+                    {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        color:
+                          _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
+                          _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
+                            ? 'red'
+                            : 'black',
+                        fontWeight: 'bold',
+                        marginVertical: 6,
+                      }}
+                    >
+                      {item.busStop.description}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color:
+                          _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
+                          _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
+                            ? 'red'
+                            : 'black',
+                        fontWeight: 'bold',
+                        marginVertical: 6,
+                        textDecorationLine: 'underline',
+                      }}
+                    >
+                      {item.busStop.busStopCode}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
+                    >
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                        Check bus stop in map
                       </Text>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: 'red',
-                          fontWeight: 'bold',
-                          marginVertical: 6,
-                          textDecorationLine: 'underline',
-                        }}
-                      >
-                        {item.busStop.busStopCode}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                      >
-                        <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                          Check bus stop in map
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </TouchableOpacity>
-                  {renderArrowDownIcon(inboundList, i)}
-                </View>
-              );
-            } else {
-              view = (
-                <View key={i}>
-                  <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
-                    <View style={styles.busServiceRoutesContainer}>
-                      {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                      <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 6 }}>
-                        {item.busStop.description}
-                      </Text>
-                      <Text
-                        style={{ fontSize: 14, fontWeight: 'bold', marginVertical: 6, textDecorationLine: 'underline' }}
-                      >
-                        {item.busStop.busStopCode}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                      >
-                        <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                          Check bus stop in map
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </TouchableOpacity>
-                  {renderArrowDownIcon(inboundList, i)}
-                </View>
-              );
-            }
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
+                {renderArrowDownIcon(inboundList, i)}
+              </View>
+            );
 
             return view;
           }
@@ -371,68 +355,52 @@ function BusServiceRoutes(props: any): JSX.Element {
           let view = null;
 
           if (item.busStop) {
-            if (
-              _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
-              _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
-            ) {
-              view = (
-                <View key={i}>
-                  <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
-                    <View style={styles.busServiceRoutesContainer}>
-                      {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                      <Text style={{ fontSize: 16, color: 'red', fontWeight: 'bold', marginVertical: 6 }}>
-                        {item.busStop.description}
+            view = (
+              <View key={i}>
+                <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
+                  <View style={styles.busServiceRoutesContainer}>
+                    {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        color:
+                          _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
+                          _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
+                            ? 'red'
+                            : 'black',
+                        fontWeight: 'bold',
+                        marginVertical: 6,
+                      }}
+                    >
+                      {item.busStop.description}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color:
+                          _.inRange(latitude, item.busStop.latitude - 0.0015, item.busStop.latitude + 0.0015) &&
+                          _.inRange(longitude, item.busStop.longitude - 0.0015, item.busStop.longitude + 0.0015)
+                            ? 'red'
+                            : 'black',
+                        fontWeight: 'bold',
+                        marginVertical: 6,
+                        textDecorationLine: 'underline',
+                      }}
+                    >
+                      {item.busStop.busStopCode}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
+                    >
+                      <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
+                        Check bus stop in map
                       </Text>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: 'red',
-                          fontWeight: 'bold',
-                          marginVertical: 6,
-                          textDecorationLine: 'underline',
-                        }}
-                      >
-                        {item.busStop.busStopCode}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                      >
-                        <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                          Check bus stop in map
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </TouchableOpacity>
-                  {renderArrowDownIcon(outboundList, i)}
-                </View>
-              );
-            } else {
-              view = (
-                <View key={i}>
-                  <TouchableOpacity onPress={() => handleBusStopCodeClick(item.busStop.busStopCode)}>
-                    <View style={styles.busServiceRoutesContainer}>
-                      {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 8 }}>{item.stopSequence}</Text> */}
-                      <Text style={{ fontSize: 16, fontWeight: 'bold', marginVertical: 6 }}>
-                        {item.busStop.description}
-                      </Text>
-                      <Text
-                        style={{ fontSize: 14, fontWeight: 'bold', marginVertical: 6, textDecorationLine: 'underline' }}
-                      >
-                        {item.busStop.busStopCode}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => handleCheckBusStopInMap(item.busStop.latitude, item.busStop.longitude)}
-                      >
-                        <Text style={{ color: 'blue', textDecorationLine: 'underline', marginVertical: 5 }}>
-                          Check bus stop in map
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </TouchableOpacity>
-                  {renderArrowDownIcon(outboundList, i)}
-                </View>
-              );
-            }
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
+                {renderArrowDownIcon(outboundList, i)}
+              </View>
+            );
 
             return view;
           }
