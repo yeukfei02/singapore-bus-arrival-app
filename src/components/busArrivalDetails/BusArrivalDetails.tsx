@@ -152,13 +152,19 @@ function BusArrivalDetails(props: any): JSX.Element {
         busArrivalResultDiv = responseData.busArrival.services.map((item: any, i: number) => {
           const nextBusList = item.nextBus;
 
-          let firstBusTimeDiffStr = 'Arriving';
+          let firstBusTimeDiffStr = '';
           let firstBusTimeDiff = moment(nextBusList[0].estimatedArrival).diff(moment(), 'minutes');
+
+          console.log('firstBusTimeDiff = ', firstBusTimeDiff);
+
           if (isNaN(firstBusTimeDiff)) {
             firstBusTimeDiff = 0;
           }
-          if (firstBusTimeDiff > 0) {
+
+          if (firstBusTimeDiff > 1) {
             firstBusTimeDiffStr = `${firstBusTimeDiff.toString()} mins`;
+          } else {
+            firstBusTimeDiffStr = 'Arriving';
           }
 
           const nextBusListResultDiv = nextBusList.map((item: any, i: number) => {
