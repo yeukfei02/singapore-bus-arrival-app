@@ -184,27 +184,43 @@ function Search(props: any): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if (roadName && roadName.length > 3) {
-      getBusStopByRoadName({ variables: { roadName: roadName } });
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (roadName && roadName.length > 3) {
+        getBusStopByRoadName({ variables: { roadName: roadName } });
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [roadName]);
 
   useEffect(() => {
-    if (placeName && placeName.length > 3) {
-      getBusStopByDescription({ variables: { description: placeName } });
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (placeName && placeName.length > 3) {
+        getBusStopByDescription({ variables: { description: placeName } });
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [placeName]);
 
   useEffect(() => {
-    if (busStopCode && busStopCode.length > 3) {
-      getBusStopByBusStopCode({ variables: { busStopCode: busStopCode } });
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (busStopCode && busStopCode.length > 3) {
+        getBusStopByBusStopCode({ variables: { busStopCode: busStopCode } });
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [busStopCode]);
 
   useEffect(() => {
-    if (busService) {
-      getAllBusService({ variables: { busServiceNo: busService } });
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (busService) {
+        getAllBusService({ variables: { busServiceNo: busService } });
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [busService]);
 
   useEffect(() => {
