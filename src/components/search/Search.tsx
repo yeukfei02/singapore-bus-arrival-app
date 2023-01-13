@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Button, Portal, Paragraph, Dialog } from 'react-native-paper';
 import Constants from 'expo-constants';
+import useDebounce from 'react-use/lib/useDebounce';
 import { MaterialIcons } from '@expo/vector-icons';
 import CustomRadioButton from '../customRadioButton/CustomRadioButton';
 
@@ -183,45 +184,45 @@ function Search(props: any): JSX.Element {
     });
   }, []);
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+  const [] = useDebounce(
+    () => {
       if (roadName && roadName.length > 3) {
         getBusStopByRoadName({ variables: { roadName: roadName } });
       }
-    }, 1000);
+    },
+    1000,
+    [roadName],
+  );
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [roadName]);
-
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+  const [] = useDebounce(
+    () => {
       if (placeName && placeName.length > 3) {
         getBusStopByDescription({ variables: { description: placeName } });
       }
-    }, 1000);
+    },
+    1000,
+    [placeName],
+  );
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [placeName]);
-
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+  const [] = useDebounce(
+    () => {
       if (busStopCode && busStopCode.length > 3) {
         getBusStopByBusStopCode({ variables: { busStopCode: busStopCode } });
       }
-    }, 1000);
+    },
+    1000,
+    [busStopCode],
+  );
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [busStopCode]);
-
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+  const [] = useDebounce(
+    () => {
       if (busService) {
         getAllBusService({ variables: { busServiceNo: busService } });
       }
-    }, 1000);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [busService]);
+    },
+    1000,
+    [busService],
+  );
 
   useEffect(() => {
     if (searchByBusServiceChecked) {
