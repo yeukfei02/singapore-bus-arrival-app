@@ -13,7 +13,7 @@
 - install expo-cli
 - install eas-cli
 - install yarn
-- install node (v14+)
+- install node (v16+)
 
 ## Testing and run
 
