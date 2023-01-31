@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.8](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.7...v0.3.8) (2023-01-31)
+
+
+### Features
+
+* 🎸 add arrow down icon in BusServiceRoutes ([f0be970](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/f0be970bd23ebada7fe581680337bca154cb27e9))
+* 🎸 add commitlint lib ([c838f13](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/c838f13931b06edc3f2ef94922bd3fec344496af))
+* 🎸 add react-use and use useDebounce ([afd2621](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/afd26217d67bb43c656efd6e3424a97281a2250f))
+* 🎸 update to expo 47 and use m1 for eas ([bb1f499](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/bb1f4993eee1c28d0598ecb6e52319e549c9e327))
+
+
+### Bug Fixes
+
+* 🐛 add delayDebounceFn when type text ([2868215](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/286821525ca30a0a8941b96bfebf10367f608622))
+* 🐛 change card can click, make BusServiceRoutes card click ([55fc7c5](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/55fc7c580032729192834c16d3bcf9e2e886ca3d))
+* 🐛 fix arriving text ([080eb64](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/080eb648dceca9fe0f6e6c1fceaad4c5f8676c0a))
+* 🐛 fix lib and update onRefresh func ([85365cd](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/85365cd77b48d1fda0b2a0988f4a8400511e936e))
+* 🐛 fix renderBusServiceRoutesList logic ([49fc86e](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/49fc86e18a3d1726ae48845fcafecba9a5a47b9d))
+* 🐛 update app.json ([5a14275](https://github.com/yeukfei02/singapore-bus-arrival-app/commit/5a14275ce1f37ab7653ba108490c04705eda5df0))
+
 ### [0.3.7](https://github.com/yeukfei02/singapore-bus-arrival-app/compare/v0.3.6...v0.3.7) (2022-06-17)
 
 
