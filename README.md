@@ -1,6 +1,6 @@
 <p align="center">
   <img width="200px" src="https://github.com/yeukfei02/singapore-bus-arrival-app/blob/main/readme-icon.png?raw=true"><br/>
-  <h2 align="center">singapore-bus-arrival-app</h2>
+  <h2 align="center">singapore-bus-arrival-app (新加坡巴士到站時間App)</h2>
 </p>
 
 <p align="center">
